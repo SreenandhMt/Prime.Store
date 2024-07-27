@@ -52,6 +52,7 @@ dependencies:
   location: ^6.0.2
   get_it: ^7.7.0
   redacted: ^1.0.11
+  timelines: ^0.1.0
 
 dev_dependencies:
   flutter_test:

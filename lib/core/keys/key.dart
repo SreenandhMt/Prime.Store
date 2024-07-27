@@ -1,0 +1,1 @@
+const removeBGAPIKey = "QGutKgL7NAGXMG3r3keDtXa3";

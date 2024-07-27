@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class AccountFavoritDataEntities extends Equatable {
+class CartEntities extends Equatable {
   final List<dynamic>? productUrls;
   final String? productName;
   final String? productAbout;
@@ -12,9 +12,8 @@ class AccountFavoritDataEntities extends Equatable {
   final List<dynamic>? sizeList;
   final String? size;
   final Map? map;
-  final String? productType;
 
-  const AccountFavoritDataEntities({
+  const CartEntities({
     this.productUrls,
     this.productName,
     this.productAbout,
@@ -26,10 +25,10 @@ class AccountFavoritDataEntities extends Equatable {
     this.sizeList,
     this.size,
     this.map,
-    this.productType,
   });
 
   @override
+  // TODO: implement props
   List<Object?> get props => [
     productUrls,
     productName,
@@ -42,7 +41,6 @@ class AccountFavoritDataEntities extends Equatable {
     colorList,
     sizeList,
     map,
-    productType,
   ];
   
 }

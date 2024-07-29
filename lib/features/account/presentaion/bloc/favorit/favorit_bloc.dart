@@ -13,6 +13,11 @@ class FavoritBloc extends Bloc<FavoritEvent, FavoritState> {
   FavoritBloc() : super(FavoritInitial()) {
     on<FavoritInit>((event, emit) {});
     on<GetData>((event, emit) async{
+      if(state is !Data)
+      {
+        emit(FavoritInitial());
+        await Future.delayed(const Duration(seconds: 3));
+      }
       final data = await AccountFavoritDataSources().getData();
       log(data.toString());
       emit(Data(data: data));

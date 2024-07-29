@@ -3,8 +3,11 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:main_work/core/theme/themes.dart';
+import 'package:main_work/features/home/presentation/widgets/home_widgets.dart';
 import 'package:timelines/timelines.dart';
 
+import '../../../buying/presentaion/page/buying_page.dart';
 import '/features/account/domain/entities/account_orders_entities.dart';
 import '/features/account/presentaion/bloc/order_list/order_list_bloc.dart';
 import '/features/account/presentaion/bloc/selling/sell_bloc.dart';
@@ -16,7 +19,6 @@ import '/features/selling/selling_page.dart';
 import '/widgets/rating/rating_bar.dart';
 
 import '../../../../main.dart';
-import '../../../buying/presentaion/page/buying_page.dart';
 import '../../../home/domain/entities/home_entitie.dart';
 import '../bloc/favorit/favorit_bloc.dart';
 
@@ -45,7 +47,7 @@ class _ScreenAccountState extends State<ScreenAccount>
     context.read<OrderListBloc>().add(GetOrderList());
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Account"),
+        title: Text("Account",style: mainAppTextTheme(20),),
         backgroundColor: theme.background,
         actions: [
           IconButton(
@@ -98,8 +100,15 @@ class _ScreenAccountState extends State<ScreenAccount>
                                   )),
                         ),
                       );
-                    } else {
-                      return const SizedBox();
+                    } else if(state is FavoritInitial) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Wrap(
+                          children: List.generate(6, (index) => ProductLoadingWidget(),),
+                        ),
+                      );
+                    }else{
+                      return SizedBox();
                     }
                   },
                 ),
@@ -114,12 +123,12 @@ class _ScreenAccountState extends State<ScreenAccount>
                                 OrderWidget(data: state.data.data![index])),
                       );
                     } else {
-                      return const SizedBox();
+                      return Center(child: CircularProgressIndicator(color: Colors.green,),);
                     }
                   },
                 ),
-                const Center(
-                  child: Text('sample text for Settings Tab'),
+                Center(
+                  child: Text('No data',style: mainAppTextTheme(14),),
                 ),
                 BlocConsumer<SellBloc, SellState>(
                   listener: (context, state) {},
@@ -353,7 +362,7 @@ class ProductText extends StatelessWidget {
                 size: 20,
               ),
               Text(
-                "4.9|2096",
+                "4.9|200",
                 style: TextStyle(color: theme.tertiary),
               ),
               const Expanded(child: SizedBox()),

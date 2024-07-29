@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:main_work/core/theme/themes.dart';
 
 import 'package:main_work/features/notification/presentaion/page/location.dart';
 import 'package:main_work/main.dart';
@@ -25,16 +26,22 @@ class ScreenNotification extends StatelessWidget {
         log(state.data.toString());
          return Scaffold(
           appBar: AppBar(
-            title: const Text("notification"),
+            title: Text("Notification",style: mainAppTextTheme(20)),
             backgroundColor: theme.background,
           ),
-          body: ListView.builder(
+          body: state.data.isNotEmpty? ListView.builder(
             itemBuilder: (context, index) => NotificationWidget(data: state.data[index],latLng: LatLng(state.location[index]!["locX"], state.location[index]!["locY"]),prodectData: state.productData[index]!,),
             itemCount: state.data.length,
-          ),
+          ):Center(child: Text("No data",style: mainAppTextTheme(14),),),
         );
        }else{
-        return const SizedBox();
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("Notification",style: mainAppTextTheme(20)),
+            backgroundColor: theme.background,
+          ),
+          body: Center(child: CircularProgressIndicator(color: Colors.green,),),
+        );
        }
       },
     );

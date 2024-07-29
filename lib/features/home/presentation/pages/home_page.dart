@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:main_work/bottom_navigation/bottom_navigation.dart';
+import 'package:main_work/core/theme/themes.dart';
 import '/features/home/presentation/pages/product_list.dart';
 import '/features/search/pages/search_page.dart';
 import '/main.dart';
@@ -111,20 +113,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    // IconButton(
-                    //     onPressed: () {},
-                    //     icon: Icon(
-                    //       Icons.verified,
-                    //       color: appColor,
-                    //     )),
                     CircleAvatar(radius: 15,backgroundImage: NetworkImage(state.data[index].imageUrl!)),
                     const SizedBox(
                       width: 10,
                     ),
                     Text(
                       state.data[index].shopName!,
-                      style:
-                          const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: mainAppTextTheme(20.0),
                     ),
                     const Expanded(child: SizedBox()),
                     if(state.data[index].products!.length>=4)
@@ -132,11 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductList(data: state.data[index].products!),)),
                       child: Text(
                         "See More",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w800,
-                            color: appColor),
-                      ),
+                        style: mainAppTextTheme(15.0),
+                    ),
                     ),
                   ],
                 ),
@@ -178,21 +170,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left:4,top: 4),
-                        child: Text("STORE",style: TextStyle(fontSize:  size.width*0.06,fontWeight: FontWeight.bold,color: theme.brightness == Brightness.dark?Colors.green:Colors.yellow)),
+                        child: Text("STORE",style: textTheme(size.width*0.06,theme.brightness == Brightness.dark?Colors.green:Colors.yellow)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 3,top: 3),
-                        child: Text("STORE",style: TextStyle(fontSize: size.width*0.06,fontWeight: FontWeight.bold,color: Colors.pinkAccent)),
+                        child: Text("STORE",style: textTheme( size.width*0.06,Colors.pinkAccent)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 2,top: 2),
-                        child: Text("STORE",style: TextStyle(fontSize: size.width*0.06,fontWeight: FontWeight.bold,color: theme.brightness== Brightness.dark?Colors.green:Colors.deepPurple)),
+                        child: Text("STORE",style: textTheme(size.width*0.06,theme.brightness== Brightness.dark?Colors.green:Colors.deepPurple)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 1,top: 1),
-                        child: Text("STORE",style: TextStyle(fontSize: size.width*0.06,fontWeight: FontWeight.bold,color: Colors.black)),
+                        child: Text("STORE",style: textTheme( size.width*0.06,Colors.black)),
                       ),
-                      Text("STORE",style: TextStyle(fontSize: size.width*0.06,fontWeight: FontWeight.bold,color: theme.brightness == Brightness.dark?Colors.white:theme.secondary),),
+                      Text("STORE",style: textTheme(size.width*0.06,theme.brightness == Brightness.dark?Colors.white:theme.secondary)),
                     ],
                   ),),),
                   width10,
@@ -200,13 +192,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       maxWidth: (size.width * 0.52),
                       maxHeight: 100,
                       child: CupertinoSearchTextField(
+                        keyboardType: TextInputType.none,
                         padding: const EdgeInsets.all(15),
                         itemSize: 25,
                         onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SearchPage(),)),
                       )),
                   const Expanded(child: SizedBox()),
                   IconButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      value.value=2;
+                    },
                     icon: const Icon(
                       Icons.shopping_bag_rounded,
                       size: 30,
@@ -214,10 +209,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   width10,
-                  const Icon(
-                    Icons.notifications,
-                    size: 30,
-                    color: Colors.grey,
+                  IconButton(
+                    onPressed: (){
+                      value.value=1;
+                    },
+                    icon: const Icon(
+                      Icons.notifications,
+                      size: 30,
+                      color: Colors.grey,
+                    ),
                   ),
                 ],
               );

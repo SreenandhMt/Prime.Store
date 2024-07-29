@@ -12,7 +12,8 @@ import 'package:main_work/features/buying/data/data_sources/remote_data_source.d
 import 'package:main_work/features/buying/data/repositories/repository.dart';
 import 'package:main_work/features/buying/domain/repositories/repository.dart';
 import 'package:main_work/features/buying/domain/usecase/usecase.dart';
-import 'package:main_work/features/buying/presentaion/bloc/buying_bloc.dart';
+import 'package:main_work/features/buying/presentaion/blocs/bloc/confrom_bloc.dart';
+import 'package:main_work/features/buying/presentaion/blocs/buying_bloc/buying_bloc.dart';
 import 'package:main_work/features/home/data/data_sources/remote/home_data_sources.dart';
 import 'package:main_work/features/home/data/repositories/home_repository.dart';
 import 'package:main_work/features/home/domain/repositories/home_repository.dart';
@@ -48,7 +49,7 @@ Future<void> initializeDependencies()async{
   sl.registerSingleton<BuyingDataSource>(BuyingDataSource());
   sl.registerSingleton<BuyingRepository>(BuyingRepositoryImp(sl()));
   sl.registerSingleton<BuyingUsecase>(BuyingUsecase(sl()));
-  sl.registerFactory<BuyingBloc>(() => BuyingBloc(sl()));
+  sl.registerFactory<ConfromBloc>(() => ConfromBloc(sl()));
 
   sl.registerSingleton<AccountRemoteDataSource>(AccountRemoteDataSource());
   sl.registerSingleton<AccountRepository>(AccountRepositoryImp(sl()));

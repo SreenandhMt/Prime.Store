@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+TextStyle mainAppTextTheme(double size){
+  return GoogleFonts.aDLaMDisplay(fontSize: size);
+}
+
+TextStyle textTheme(double size,Color color){
+  return GoogleFonts.aDLaMDisplay(fontSize: size,color: color);
+}
 
 ThemeData lightTheme = ThemeData(
   colorScheme: ColorScheme.light(
@@ -8,6 +17,7 @@ ThemeData lightTheme = ThemeData(
     tertiary: Colors.black38,
     scrim: Colors.grey.shade300,
     surface: Colors.grey.shade300,
+
   ),
 );
 

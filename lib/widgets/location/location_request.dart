@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:location/location.dart';
+import 'package:main_work/features/auth/presentaion/page/auth_page.dart';
 
 import 'package:main_work/features/home/domain/entities/home_entitie.dart';
 
@@ -27,8 +29,19 @@ class LocationRequest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: check(),
+      future: check(context),
       builder: (context, snapshot){
+        if(FirebaseAuth.instance.currentUser==null)
+        {
+          return SizedBox(width: double.infinity,height: 300,child: Center(child: Stack(
+            children: [
+              MaterialButton(child: Text("Login",style: GoogleFonts.aDLaMDisplay(fontSize: 20),),onPressed: (){
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AuthRoute(appbar: true,),));
+              })
+            ],
+          )));
+        }
         if(snapshot.data==null)
         {
           return const SizedBox(width: double.infinity,height: 300,child: Center(child: CircularProgressIndicator()));
@@ -46,7 +59,7 @@ class LocationRequest extends StatelessWidget {
         }
         return SizedBox(
           height: 300,
-          child: Column(
+          child: Stack(
             children: [
               MaterialButton(onPressed: ()async{
                 await getLocation();
@@ -98,7 +111,7 @@ class LocationRequest extends StatelessWidget {
     await _firestore.collection("location").doc(uid).set({"locX":_latitude,"locY":_longitude});
     return true;
   }
-  Future<bool> check()async{
+  Future<bool> check(context)async{
     try {
       final uid = _auth.currentUser!.uid;
     final st = await _firestore

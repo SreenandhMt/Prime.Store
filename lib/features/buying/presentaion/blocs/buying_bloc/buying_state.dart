@@ -12,3 +12,4 @@ final class BuyingPageState extends BuyingState {
   BuyingPageState({required this.favoritListAdded, required this.cartListAdded,this.review});
 
 }
+

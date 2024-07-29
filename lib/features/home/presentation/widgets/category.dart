@@ -13,7 +13,7 @@ class CategoryWidget extends StatelessWidget {
     _size=MediaQuery.of(context).size;
     return Container(
       color: Theme.of(context).colorScheme.primary,
-      height: 110,
+      height: _size!.width*0.3,
       width: _size!.width*0.2,
       child: ListView(
         scrollDirection: Axis.horizontal,
@@ -22,7 +22,7 @@ class CategoryWidget extends StatelessWidget {
           GestureDetector(onTap: ()=>value.value=3,child: card(icon: Icons.shopping_cart_outlined,name: "CART")),
           GestureDetector(onTap: ()=>value.value=2,child: card(icon: Icons.favorite_border_rounded,name: "FAVORITS")),
           GestureDetector(onTap: ()=>value.value=2,child: card(icon: Icons.local_activity_outlined,name: "COUPONS")),
-          GestureDetector(onTap: ()=>value.value=3,child: card(icon: Icons.add_business_outlined,name: "SELL")),
+          GestureDetector(onTap: ()=>value.value=2,child: card(icon: Icons.add_business_outlined,name: "SELL")),
         ],
       ),
     );

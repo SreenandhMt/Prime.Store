@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:redacted/redacted.dart';
 
+import '../../domain/entities/home_category_entities.dart';
 import '/features/buying/presentaion/page/buying_page.dart';
 import '/features/home/domain/entities/home_entitie.dart';
 import '/main.dart';
@@ -12,14 +13,21 @@ class ProductWidget extends StatelessWidget {
     this.dataList,
   }) : super(key: key);
   final HomeDataEntities data;
-  final List<HomeDataEntities>? dataList;
+  final HomeCategoryDataEntities? dataList;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     if (size.width <= 500) {
       return GestureDetector(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyingPage(homeData: data,dataList: dataList,),)),
+        onTap: () {
+          if(dataList!=null)
+          {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyingPage(homeData: data,dataList: dataList,),));
+          }else{
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyingPage(homeData: data),));
+          }
+        },
         child: Container(
           margin: const EdgeInsets.all(3.5),
           width: (size.width / 2) * 0.96,

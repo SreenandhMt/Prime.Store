@@ -8,9 +8,3 @@ final class GetFavoritState extends BuyingEvent {
 
   GetFavoritState({required this.productId}); 
 }
-
-final class OrderPlace extends BuyingEvent {
-  final HomeDataEntities data;
-
-  OrderPlace({required this.data});
-}

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:main_work/features/buying/presentaion/bloc/buying_bloc.dart';
+import 'package:main_work/features/buying/presentaion/blocs/buying_bloc/buying_bloc.dart';
 import 'package:main_work/features/cart/domain/entities/cart_entities.dart';
 
 import 'package:main_work/features/cart/presentaion/bloc/cart_bloc.dart';
 import 'package:main_work/main.dart';
 import 'package:main_work/widgets/location/location_request.dart';
 
+import '../../../../core/theme/themes.dart';
 import '../../../buying/presentaion/page/buying_page.dart';
 import '../../../home/data/module/home_module.dart';
 
@@ -20,11 +21,18 @@ class ScreenCartPage extends StatelessWidget {
     context.read<CartBloc>().add(CartGetData());
     return BlocConsumer<CartBloc, CartState>(
       listener: (context, state) {
+        if(state is CartData)
+        {
+          if(state.cartProducts.isEmpty)
+          {
+            totalPrice.value=0;
+          }
+        }
       },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text("My Cart"),
+            title: Text("My Cart",style: mainAppTextTheme(20)),
             backgroundColor: Theme.of(context).colorScheme.background,
           ),
           body: Column(

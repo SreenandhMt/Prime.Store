@@ -42,7 +42,7 @@ class HomeData extends HomeDataEntities {
         colors: 0,
         size: map["size"]??"",
         map: map,
-        colorList: map["colorList"]!=null&&map["colorList"].length==1?[""]: map["colorList"] ?? [],
+        colorList: map["colorList"]?? [],
         sizeList: map["sizeList"] ?? [],
         productType: map["productType"] ?? "");
   }

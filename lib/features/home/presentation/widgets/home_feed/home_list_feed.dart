@@ -15,7 +15,7 @@ class HomeProductListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Wrap(
-        children: List.generate(data.products!.length<=4?data.products!.length:4, (index) => ProductWidget(data: data.products![index],dataList: data.products!,)),
+        children: List.generate(data.products!.length<=4?data.products!.length:4, (index) => ProductWidget(data: data.products![index],dataList: data,)),
       ),
     );
   }

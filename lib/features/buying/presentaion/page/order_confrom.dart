@@ -1,12 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:main_work/features/buying/presentaion/blocs/bloc/confrom_bloc.dart';
 
 import 'package:main_work/features/cart/domain/entities/cart_entities.dart';
+import 'package:main_work/main.dart';
 
 import '../../../cart/presentaion/bloc/cart_bloc.dart';
 import '../../../home/data/module/home_module.dart';
 import '../../../home/domain/entities/home_entitie.dart';
-import '../bloc/buying_bloc.dart';
 
 class OrderConform extends StatefulWidget {
   const OrderConform({
@@ -31,50 +35,104 @@ class _OrderConformState extends State<OrderConform> {
 
   @override
   Widget build(BuildContext context) {
-    if (!done)
-    {
-      return const Scaffold(
-          body: Center(
-              child: CircularProgressIndicator(
-        color: Colors.green,
-      )));
-    }
-    return const Scaffold(
-      body: Align(
-        alignment: Alignment.center,
-        child: Stack(
-          children: [
-            Icon(
-              Icons.verified,
-              color: Colors.green,
-              size: 100,
+    return BlocBuilder<ConfromBloc, ConfromState>(
+      builder: (context, state) {
+        if (state is SuccessPayment) {
+          if (state.removeCartData != null) {
+            log("removed");
+            for (var data in state.removeCartData!) {
+              context
+                  .read<CartBloc>()
+                  .add(CartDeleteData(productId: data.productId!));
+              context
+                  .read<ConfromBloc>()
+                  .add(ClearData());
+            }
+          }
+          return Scaffold(
+            backgroundColor: const Color.fromARGB(255, 2, 130, 8),
+            body: Align(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  const CircleAvatar(
+                    radius: 90,
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      color: Colors.green,
+                      Icons.done_outline_rounded,
+                      size: 60,
+                    ),
+                  ),
+                  Text(
+                    "Done",
+                    style: GoogleFonts.aDLaMDisplay(fontSize: 18),
+                  )
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
+          );
+        }
+        if (state is FaildPayment) {
+          return Scaffold(
+            backgroundColor: const Color.fromARGB(255, 187, 6, 6),
+            body: Align(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  const CircleAvatar(
+                    radius: 90,
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      color: Colors.red,
+                      Icons.close_rounded,
+                      size: 60,
+                    ),
+                  ),
+                  Text(
+                    "Faild",
+                    style: GoogleFonts.aDLaMDisplay(fontSize: 18),
+                  )
+                ],
+              ),
+            ),
+          );
+        }
+        return const Scaffold(
+            body: Center(
+                child: CircularProgressIndicator(
+          color: Colors.green,
+        )));
+      },
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void init() async {
-    if (widget.data != null) {
+    try {
+      if (widget.data != null) {
       context
-          .read<BuyingBloc>()
+          .read<ConfromBloc>()
           .add(OrderPlace(data: HomeData.formjson(widget.data!.map!)));
     } else if (widget.cart != null) {
       final cart = widget.cart;
-      for (var data in cart!) {
-        context
-            .read<BuyingBloc>()
-            .add(OrderPlace(data: HomeData.formjson(data.map!)));
-        context
-            .read<CartBloc>()
-            .add(CartDeleteData(productId: data.productId!));
-      }
+      context
+            .read<ConfromBloc>()
+            .add(OrderCartProdecuts(data: cart!));
     }
-    await Future.delayed(const Duration(seconds: 4));
-    setState(() {
-      done = true;
-    });
+    } catch (e) {
+     log(e.toString()); 
+    }
     //  await Future.delayed(const Duration(seconds: 5),() => Navigator.of(context).pop(),);
   }
 }

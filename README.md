@@ -2,14 +2,14 @@
 Prime Store is a cross-platform e-commerce application built with Flutter, offering a comprehensive and seamless shopping experience. The app is packed with essential e-commerce functionalities, including cart management, product favorites, user authentication, secure payment processing, and more. Additionally, it empowers users to create their own shop pages, buy and sell items, and engage with reviews and ratings.
 
 # **Features**
-**Cart Management:** Add, update, or remove items from your shopping cart. 
-**Favorites:** Mark your favorite products for quick access. 
-**Authentication:** Secure login and registration features using Firebase Authentication. 
-**Buying:** Complete purchase workflows with ease and convenience. 
-**Review and Rating:** Users can leave reviews and ratings for products they have purchased, helping others make informed decisions. 
-**Shop Creation:** Users can create their own shop pages, list products, and manage their sales. 
-**Search:** Find products quickly with an advanced search functionality. 
-**Payment:** Smooth and secure payment processing for all transactions. 
+- **Cart Management:** Add, update, or remove items from your shopping cart. 
+- **Favorites:** Mark your favorite products for quick access. 
+- **Authentication:** Secure login and registration features using Firebase Authentication. 
+- **Buying:** Complete purchase workflows with ease and convenience. 
+- **Review and Rating:** Users can leave reviews and ratings for products they have purchased, helping others make informed decisions. 
+- **Shop Creation:** Users can create their own shop pages, list products, and manage their sales. 
+- **Search:** Find products quickly with an advanced search functionality. 
+- **Payment:** Smooth and secure payment processing for all transactions. 
 
 ## **Tech Stack**
 - **Frontend:**

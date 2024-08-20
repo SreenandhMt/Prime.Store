@@ -1,8 +1,25 @@
-## Prime Store
+# Prime Store
+Prime Store is a cross-platform e-commerce application built with Flutter, enabling users to seamlessly shop for their favorite products. The app includes essential e-commerce features such as cart management, product favorites, authentication, search functionality, and payment processing.
 
-A new Flutter project.
+# Features
+**Cart Management:** Add, update, or remove items from your shopping cart.
+**Favorites:** Mark your favorite products for quick access.
+**Authentication:** Secure login and registration features using Firebase Authentication.
+**Payment:** Smooth and secure payment processing.
 
-## Images
+## **Tech Stack**
+- **Frontend:**
+  - Flutter
+- **State Management:**
+  - Bloc
+- **Backend Services:**
+  - Firebase Authentication
+  - Firebase Firestore
+  - Firebase Storage
+- **Additional Integrations:**
+  - Google Maps
+
+# Images
 
 **Dark**
 
@@ -43,6 +60,11 @@ A new Flutter project.
 <img src="https://github.com/user-attachments/assets/3378cbbc-4f4f-4374-8bff-5341aebc9ab4" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/faa55133-34c0-4442-8052-57a43bc5743b" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/b5cdc995-5ad4-46e6-8a24-fdcb6745fad3" width="200" height="400" />
+
+# **Contact**
+**Email** - sreenand104@gmail.com
+**Phone No.** - 7012123028
+**Project Link:** https://github.com/SreenandhMt/prime
 
 ## Getting Started
 

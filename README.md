@@ -50,7 +50,6 @@ Prime Store is a cross-platform e-commerce application built with Flutter, offer
 <img src="https://github.com/user-attachments/assets/e6c43d2a-261f-4c6e-97fa-935b87a01b39" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/dcf42384-85d4-4312-9b2e-81eb0d7e21b4" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/86f3629a-f720-4baa-b107-b4be94f68b86" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/c111b2fb-b1f7-4c79-a28e-a24557dafb1f" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/5517bf7c-8670-4bdd-b796-acc5b35c933a" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/f3e288bc-2a99-40c9-93a9-59e6628f902f" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/5173dbe0-ae00-4d3a-935e-0e3f0180ba62" width="200" height="400" />

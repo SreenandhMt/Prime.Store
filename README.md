@@ -25,48 +25,38 @@ Prime Store is a cross-platform e-commerce application built with Flutter, offer
 
 # Images
 
-**Dark**
-
-<img src="https://github.com/user-attachments/assets/a59180ab-8d20-4fed-9d65-5df45d3d2bed" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/7e8a32bb-5da8-48d3-9789-395935a772de" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/8ff17dbc-5a41-4614-aa89-dfd8ba2f2ba9" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/2ccf08d6-17aa-47db-8496-740b78afc54b" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/d770ffe5-3cc2-43f4-a000-6720c0be0caa" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/c1effb68-4c94-4311-b266-48e3809a6849" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/13144de5-6637-4248-88fa-eb33d5c5d49f" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/9de5388b-1320-492f-ac4c-fc003019ed2e" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/8d243c56-e981-4940-b0f3-66075882e84b" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/dfe14bd9-02cc-433a-a706-46c70bd67b16" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/e66a892c-edd9-4c93-89c5-d063e04ee74f" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/4ac93f2a-f350-43ed-afcf-a793e183676d" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/655554c4-8f72-4397-a7b6-09986bb21788" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/16530db6-2688-4a8e-9372-4e1ce768f6aa" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/6991a5ff-2e64-45fb-8747-b41408a257fa" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/5de96755-2c10-41d5-99d6-677e292c6ceb" width="200" height="400" />
-
 **Light**
 
-<img src="https://github.com/user-attachments/assets/a52aa93c-7285-49f6-bb1e-81e0c6be581c" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/e6c43d2a-261f-4c6e-97fa-935b87a01b39" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/dcf42384-85d4-4312-9b2e-81eb0d7e21b4" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/86f3629a-f720-4baa-b107-b4be94f68b86" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/5517bf7c-8670-4bdd-b796-acc5b35c933a" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/f3e288bc-2a99-40c9-93a9-59e6628f902f" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/5173dbe0-ae00-4d3a-935e-0e3f0180ba62" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/262077bb-ec7e-4f24-b783-92b85437943c" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/17f575d8-e375-4c72-ab83-8deaa21c0f72" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/342fd0ae-6d55-41cb-a8f3-9e32789bd76e" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/6cc00bcd-8f65-4123-aedf-b0c96fb7caa5" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/a6b533de-007e-48f7-bce7-77fd521ef2b6" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/69ce93bc-4487-4513-a6c9-370081dfbf62" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/3378cbbc-4f4f-4374-8bff-5341aebc9ab4" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/faa55133-34c0-4442-8052-57a43bc5743b" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/b5cdc995-5ad4-46e6-8a24-fdcb6745fad3" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/51f120c2-3187-48dc-9230-989134b3be80" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/7c78c2d7-8776-4604-b5d6-66595354c7b0" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/1dc40911-5416-48ac-89e5-168ab32b0825" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/fae377fa-d907-4f19-80c9-5f943c15b0b7" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/554ffcf3-6a56-41af-8162-7f714a4d4c8b" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/7575dd15-7d00-4327-a656-cdf56b6770d3" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/5ae7713b-d372-44ea-99cc-885d3b81f10f" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/2c446cb4-17f7-4bee-bc54-046e87e66074" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/2c2367b6-a60a-423c-96ab-191c684427b8" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/cebef8c5-0cbb-43b3-8e6c-c99be6dad7de" width="200" height="400" />
+
+**Dark**
+
+<img src="https://github.com/user-attachments/assets/6a499100-0360-4642-9f67-f72c30e2b904" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/d39d9313-1e7c-4305-b540-7501b3592f73" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/7ba48ddf-6f23-432e-84fa-9bd515e2c1a2" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/c83c3d01-574e-4e33-9b8f-54df9e19eef6" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/6e74cb19-eb0d-45ad-ba98-924cf9d83c79" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/54084c8f-2693-47c1-82f9-caefd0ad83d7" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/03838414-b919-4e5c-9604-f908d4c5d520" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/439f45ad-6079-453d-a6dc-349a3f088539" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/2b4af7a0-132b-419d-8695-5dcda4388f8f" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/8a95220d-0ee0-4d52-a607-48fd626cc177" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/1a135ab0-1d2e-47e1-8138-fd78edf84ab1" width="200" height="400" />
+
 
 # **Contact**
-**Email** - sreenand104@gmail.com
-**Phone No.** - 7012123028
-**Project Link:** https://github.com/SreenandhMt/prime
+ -**Email** - sreenand104@gmail.com
+ -**Phone No.** - 7012123028
+ -**Project Link:** https://github.com/SreenandhMt/prime
 
 ## Getting Started
 

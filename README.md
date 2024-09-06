@@ -43,9 +43,8 @@ Prime Store is a cross-platform e-commerce application built with Flutter, offer
 <img src="https://github.com/user-attachments/assets/6a499100-0360-4642-9f67-f72c30e2b904" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/d39d9313-1e7c-4305-b540-7501b3592f73" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/7ba48ddf-6f23-432e-84fa-9bd515e2c1a2" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/c83c3d01-574e-4e33-9b8f-54df9e19eef6" width="200" height="400" />
-<img src="https://github.com/user-attachments/assets/6e74cb19-eb0d-45ad-ba98-924cf9d83c79" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/54084c8f-2693-47c1-82f9-caefd0ad83d7" width="200" height="400" />
+<img src="https://github.com/user-attachments/assets/c83c3d01-574e-4e33-9b8f-54df9e19eef6" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/03838414-b919-4e5c-9604-f908d4c5d520" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/439f45ad-6079-453d-a6dc-349a3f088539" width="200" height="400" />
 <img src="https://github.com/user-attachments/assets/2b4af7a0-132b-419d-8695-5dcda4388f8f" width="200" height="400" />

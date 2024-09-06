@@ -3,6 +3,7 @@ import 'package:main_work/features/account/data/data_sources/remote/remote_data_
 import 'package:main_work/features/account/data/repositories/account_repository.dart';
 import 'package:main_work/features/account/domain/repositories/account_repository.dart';
 import 'package:main_work/features/account/domain/usecase/account_usecase.dart';
+import 'package:main_work/features/account/presentaion/bloc/bloc/account_bloc.dart';
 import 'package:main_work/features/auth/data/data_sources/remote/auth_data_sources.dart';
 import 'package:main_work/features/auth/data/repositories/auth_repository.dart';
 import 'package:main_work/features/auth/domain/repositories/auth_repository.dart';
@@ -13,7 +14,6 @@ import 'package:main_work/features/buying/data/repositories/repository.dart';
 import 'package:main_work/features/buying/domain/repositories/repository.dart';
 import 'package:main_work/features/buying/domain/usecase/usecase.dart';
 import 'package:main_work/features/buying/presentaion/blocs/bloc/confrom_bloc.dart';
-import 'package:main_work/features/buying/presentaion/blocs/buying_bloc/buying_bloc.dart';
 import 'package:main_work/features/home/data/data_sources/remote/home_data_sources.dart';
 import 'package:main_work/features/home/data/repositories/home_repository.dart';
 import 'package:main_work/features/home/domain/repositories/home_repository.dart';
@@ -25,7 +25,6 @@ import 'package:main_work/features/notification/domain/repositories/repository.d
 import 'package:main_work/features/notification/domain/usecase/usecase.dart';
 import 'package:main_work/features/notification/presentaion/bloc/notification_bloc.dart';
 
-import 'features/account/presentaion/bloc/order_list/order_list_bloc.dart';
 
 
 final sl = GetIt.instance;
@@ -54,5 +53,5 @@ Future<void> initializeDependencies()async{
   sl.registerSingleton<AccountRemoteDataSource>(AccountRemoteDataSource());
   sl.registerSingleton<AccountRepository>(AccountRepositoryImp(sl()));
   sl.registerSingleton<AccountUsecase>(AccountUsecase(sl()));
-  sl.registerFactory<OrderListBloc>(() => OrderListBloc(sl()));
+  sl.registerFactory<AccountBloc>(() => AccountBloc(sl()));
 }

@@ -8,9 +8,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart'; 
-import 'package:main_work/features/account/data/module/account_selling_module.dart';
+import 'package:main_work/features/home/data/module/home_module.dart';
+import 'package:main_work/features/home/domain/entities/home_entitie.dart';
 
-import '../../../domain/entities/account_selling_entities.dart';
 
 part 'sell_event.dart';
 part 'sell_state.dart';
@@ -24,14 +24,14 @@ class SellBloc extends Bloc<SellEvent, SellState> {
     on<SellEvent>((event, emit) {});
     on<GetSelledDatas>((event, emit) async{
       if(_auth.currentUser==null)return;
-      final data =await _firestore.collection("products").where("sellerId",isEqualTo: _auth.currentUser!.uid).get().then((value) => value.docs.map((e) => AccountSellingData.formjson(e.data())).toList());
+      final data =await _firestore.collection("products").where("sellerId", isEqualTo: _auth.currentUser!.uid).get().then((value) => value.docs.map((e) => HomeData.formjson(e.data())).toList());
       emit(SelledProdects(data: data));
     });
 
     on<Delete>((event, emit) async{
       emit(Uploading());
       await _firestore.collection("products").doc(event.id).delete();
-      final data =await _firestore.collection("products").where("sellerId",isEqualTo: _auth.currentUser!.uid).get().then((value) => value.docs.map((e) => AccountSellingData.formjson(e.data())).toList());
+      final data =await _firestore.collection("products").get().then((value) => value.docs.map((e) => HomeData.formjson(e.data())).toList());
       emit(SelledProdects(data: data));
     });
 
@@ -41,24 +41,20 @@ class SellBloc extends Bloc<SellEvent, SellState> {
         if(_auth.currentUser==null)return;
       emit(Uploading());
       final uid = _auth.currentUser!.uid;
-      final highlight = event.producthigh;
       Map<String, dynamic> mapData = {
         "productId": event.id,
         "productUrls": imageUrl,
         "productName": event.productName,
         "productAbout": event.productAbout,
-        "highlights": highlight,
         "productType": event.productType,
-        "sellerId": uid,
+        "sellerId": event.sellerId,
         "price":event.price,
-        "colors": 1,
         "colorList":event.colorsList??[],
         "sizeList":event.sizeList??[],
-        "size": "",
       };
 
       await _firestore.collection("products").doc(mapData["productId"]).update(mapData);
-      final data =await _firestore.collection("products").where("sellerId",isEqualTo: uid).get().then((value) => value.docs.map((e) => AccountSellingData.formjson(e.data())).toList());
+      final data =await _firestore.collection("products").get().then((value) => value.docs.map((e) => HomeData.formjson(e.data())).toList());
       emit(SelledProdects(data: data));
       } catch (e) {
         log(e.toString());
@@ -95,7 +91,7 @@ class SellBloc extends Bloc<SellEvent, SellState> {
       };
 
       await _firestore.collection("products").doc(mapData["productId"]).set(mapData);
-      final data =await _firestore.collection("products").where("sellerId",isEqualTo: _auth.currentUser!.uid).get().then((value) => value.docs.map((e) => AccountSellingData.formjson(e.data())).toList());
+      final data =await _firestore.collection("products").where("sellerId",isEqualTo: _auth.currentUser!.uid).get().then((value) => value.docs.map((e) => HomeData.formjson(e.data())).toList());
       emit(SelledProdects(data: data));
       } catch (e) {
         log("error "+e.toString());

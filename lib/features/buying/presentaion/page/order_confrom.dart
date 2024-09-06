@@ -3,11 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:main_work/features/account/presentaion/widgets/address_adding.dart';
+
 import 'package:main_work/features/buying/presentaion/blocs/bloc/confrom_bloc.dart';
-
 import 'package:main_work/features/cart/domain/entities/cart_entities.dart';
-import 'package:main_work/main.dart';
 
+import '../../../auth/presentaion/page/auth_page.dart';
 import '../../../cart/presentaion/bloc/cart_bloc.dart';
 import '../../../home/data/module/home_module.dart';
 import '../../../home/domain/entities/home_entitie.dart';
@@ -17,9 +18,21 @@ class OrderConform extends StatefulWidget {
     Key? key,
     this.data,
     this.cart,
+    this.selectedColor,
+    this.selectedSize,
+    this.itemCount,
+    this.cartSelectedColor,
+    this.cartSelectedSize,
+    this.cartItemCount,
   }) : super(key: key);
   final HomeDataEntities? data;
   final List<CartEntities>? cart;
+  final String? selectedColor;
+  final String? selectedSize;
+  final String? itemCount;
+  final List<String>? cartSelectedColor;
+  final List<String>? cartSelectedSize;
+  final List<String>? cartItemCount;
 
   @override
   State<OrderConform> createState() => _OrderConformState();
@@ -35,18 +48,61 @@ class _OrderConformState extends State<OrderConform> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return BlocBuilder<ConfromBloc, ConfromState>(
       builder: (context, state) {
+        if (state is LoginRequest) {
+          WidgetsBinding.instance.addPostFrameCallback(
+            (timeStamp) {
+              showDialog(
+                context: context,
+                builder: (context) => Dialog(
+                  // shape: Border.all(),
+                  child: SizedBox(
+                      width: size.width <= 1000
+                          ? size.width * 0.6
+                          : size.width * 0.3,
+                      child: AuthGate()),
+                ),
+              );
+            },
+          );
+          return SizedBox(
+              width: double.infinity,
+              height: 300,
+              child: Center(
+                  child: Stack(
+                children: [],
+              )));
+        }
+        if (state is AddressRequest) {
+          WidgetsBinding.instance.addPostFrameCallback(
+            (timeStamp) {
+              showDialog(
+                context: context,
+                builder: (context) => Dialog(
+                  shape: Border.all(),
+                  child: SizedBox(
+                      child: AddressAddingPage()),
+                ),
+              );
+            },
+          );
+          return SizedBox(
+              width: double.infinity,
+              height: 300,
+              child: Center(
+                  child: Stack(
+                children: [],
+              )));
+        }
         if (state is SuccessPayment) {
           if (state.removeCartData != null) {
-            log("removed");
             for (var data in state.removeCartData!) {
               context
                   .read<CartBloc>()
                   .add(CartDeleteData(productId: data.productId!));
-              context
-                  .read<ConfromBloc>()
-                  .add(ClearData());
+              context.read<ConfromBloc>().add(ClearData());
             }
           }
           return Scaffold(
@@ -121,17 +177,18 @@ class _OrderConformState extends State<OrderConform> {
   void init() async {
     try {
       if (widget.data != null) {
-      context
-          .read<ConfromBloc>()
-          .add(OrderPlace(data: HomeData.formjson(widget.data!.map!)));
-    } else if (widget.cart != null) {
-      final cart = widget.cart;
-      context
-            .read<ConfromBloc>()
-            .add(OrderCartProdecuts(data: cart!));
-    }
+        context.read<ConfromBloc>().add(OrderPlace(
+            data: HomeData.formjson(widget.data!.map!),
+            itemCount: widget.itemCount ?? "1",
+            selectedColor:
+                widget.selectedColor ?? widget.data!.colorList!.first,
+            selectedSize: widget.selectedSize ?? widget.data!.sizeList!.first));
+      } else if (widget.cart != null) {
+        final cart = widget.cart;
+        context.read<ConfromBloc>().add(OrderCartProdecuts(data: cart!));
+      }
     } catch (e) {
-     log(e.toString()); 
+      log(e.toString());
     }
     //  await Future.delayed(const Duration(seconds: 5),() => Navigator.of(context).pop(),);
   }

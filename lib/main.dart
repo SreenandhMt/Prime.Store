@@ -5,18 +5,18 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:main_work/core/keys/key.dart';
 import 'package:main_work/core/theme/themes.dart';
-import 'package:main_work/features/account/presentaion/bloc/order_list/order_list_bloc.dart';
+import 'package:main_work/features/account/presentaion/bloc/bloc/account_bloc.dart';
 import 'package:main_work/features/account/presentaion/bloc/selling/sell_bloc.dart';
 import 'package:main_work/features/auth/presentaion/bloc/bloc/auth_bloc.dart';
 import 'package:main_work/features/buying/presentaion/blocs/bloc/confrom_bloc.dart';
 import 'package:main_work/features/buying/presentaion/blocs/buying_bloc/buying_bloc.dart';
 import 'package:main_work/features/cart/presentaion/bloc/cart_bloc.dart';
 import 'package:main_work/features/home/presentation/bloc/home_bloc.dart';
+import 'package:main_work/features/shop/presentaion/bloc/bloc/shop_info_bloc.dart';
 import 'package:main_work/firebase_options.dart';
 import 'package:main_work/injection_container.dart';
 
 import 'bottom_navigation/bottom_navigation.dart';
-import 'features/account/presentaion/bloc/favorit/favorit_bloc.dart';
 import 'features/notification/presentaion/bloc/notification_bloc.dart';
 
 late ColorScheme theme;
@@ -47,7 +47,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<BuyingBloc>(
           create: (context) => BuyingBloc(),
         ),
-        BlocProvider<OrderListBloc>(
+        BlocProvider<ShopInfoBloc>(
+          create: (context) => ShopInfoBloc(),
+        ),
+        BlocProvider<AccountBloc>(
           create: (context) => sl(),
         ),
         BlocProvider<NotificationBloc>(
@@ -61,9 +64,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<CartBloc>(
           create: (context) => CartBloc(),
-        ),
-        BlocProvider<FavoritBloc>(
-          create: (context) => FavoritBloc(),
         ),
       ],
       child: MaterialApp(

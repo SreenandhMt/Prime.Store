@@ -6,8 +6,8 @@ class BuyingRepositoryImp implements BuyingRepository{
   final BuyingDataSource _dataSource;
   BuyingRepositoryImp(this._dataSource);
   @override
-  Future<String> buyConfrom({required Map<String,dynamic> map,required String uid,required String id}) {
-    return _dataSource.buyConfrom(map: map, uid: uid, id: id);
+  Future<String> buyConfrom({required Map<String,dynamic> map,required String uid,required String id,required String selectedColor,required String selectedSize,required String itemCount}) {
+    return _dataSource.buyConfrom(map: map, uid: uid, id: id, selectedColor: selectedColor, selectedSize: selectedSize, itemCount: itemCount);
   }
 
   @override

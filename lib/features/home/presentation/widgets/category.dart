@@ -12,10 +12,23 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     _size=MediaQuery.of(context).size;
     return Container(
-      color: Theme.of(context).colorScheme.primary,
+      color: Theme.of(context).colorScheme.scrim,
       height: _size!.width*0.3,
-      width: _size!.width*0.2,
-      child: ListView(
+      width: _size!.width*1,
+      child: _size!.width>1000?
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          GestureDetector(onTap: (){},child: card(icon: Icons.local_offer_rounded,name: "OFFERS")),
+          GestureDetector(onTap: ()=>value.value=3,child: card(icon: Icons.shopping_cart_outlined,name: "CART")),
+          GestureDetector(onTap: ()=>value.value=2,child: card(icon: Icons.favorite_border_rounded,name: "FAVORITS")),
+          GestureDetector(onTap: ()=>value.value=2,child: card(icon: Icons.local_activity_outlined,name: "COUPONS")),
+          GestureDetector(onTap: ()=>value.value=2,child: card(icon: Icons.add_business_outlined,name: "SELL")),
+        ],
+      )
+      :
+      ListView(
         scrollDirection: Axis.horizontal,
         children: [
           GestureDetector(onTap: (){},child: card(icon: Icons.local_offer_rounded,name: "OFFERS")),
@@ -33,16 +46,19 @@ class CategoryWidget extends StatelessWidget {
       padding: const EdgeInsets.only(left: 10,right: 10,top: 8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Stack(
+            alignment: Alignment.center,
             children: [
-              Container(margin: const EdgeInsets.only(top: 1.5,left: 1.5),decoration: BoxDecoration(color: theme.brightness == Brightness.dark?const Color.fromARGB(255, 74, 112, 75):Colors.yellow,borderRadius: BorderRadius.circular(7)),height: _size!.width*0.147,width: _size!.width*0.147,child: Icon(icon,color: Colors.grey.shade700,size: 35,)),
-              Container(margin: const EdgeInsets.only(top: 0.8,left: 0.9),decoration: BoxDecoration(color: theme.brightness == Brightness.dark? Color.fromARGB(255, 171, 220, 65): const Color.fromARGB(255, 74, 112, 75),borderRadius: BorderRadius.circular(7)),height: _size!.width*0.145,width: _size!.width*0.145,child: Icon(icon,color: Colors.grey.shade700,size: 35,)),
-              Container(decoration: BoxDecoration(color: Colors.grey.shade300,borderRadius: BorderRadius.circular(7)),height: _size!.width*0.14,width: _size!.width*0.14,child: Icon(icon,color: Colors.grey.shade700,size: 35,)),
+              Container(margin: const EdgeInsets.only(top: 1.5,left: 1.5),decoration: BoxDecoration(color: theme.brightness == Brightness.dark?const Color.fromARGB(255, 74, 112, 75):Colors.yellow,borderRadius: BorderRadius.circular(7)),height: _size!.width<=1000? _size!.width*0.147: 100,width: _size!.width<=1000? _size!.width*0.147: 100,child: Icon(icon,color: Colors.grey.shade700,size: 35,)),
+              Container(margin: const EdgeInsets.only(top: 0.8,left: 0.9),decoration: BoxDecoration(color: theme.brightness == Brightness.dark? Color.fromARGB(255, 171, 220, 65): const Color.fromARGB(255, 74, 112, 75),borderRadius: BorderRadius.circular(7)),height:  _size!.width<=1000? _size!.width*0.147: 100,width:  _size!.width<=1000? _size!.width*0.147: 100,child: Icon(icon,color: Colors.grey.shade700,size: 35,)),
+              Container(decoration: BoxDecoration(color: Colors.grey.shade300,borderRadius: BorderRadius.circular(7)),height: _size!.width<=1000? _size!.width*0.14: 97,width:_size!.width<=1000? _size!.width*0.14: 97,child: Icon(icon,color: Colors.grey.shade700,size: 35,)),
             ],
           ),
           const SizedBox(height: 5,),
           Stack(
+            alignment: Alignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 1.7,left: 1.7),

@@ -3,8 +3,8 @@ part of 'buying_bloc.dart';
 @immutable
 sealed class BuyingEvent {}
 
-final class GetFavoritState extends BuyingEvent {
+final class GetProductInfo extends BuyingEvent {
   final String productId;
 
-  GetFavoritState({required this.productId}); 
+  GetProductInfo({required this.productId}); 
 }

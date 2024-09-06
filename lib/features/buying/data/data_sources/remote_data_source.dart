@@ -12,18 +12,21 @@ FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 FirebaseAuth _auth = FirebaseAuth.instance;
 
 class BuyingDataSource {
-  Future<String> buyConfrom({required Map<String,dynamic> map,required String uid,required String id}) async{
-    final data = await StripeService.instance.makePayment(map["price"]);
-    if(!data)return"";
+  Future<String> buyConfrom({required Map<String,dynamic> map,required String uid,required String id,required String selectedColor,required String selectedSize,required String itemCount}) async{
+    // final data = await StripeService.instance.makePayment(map["price"]);
+    // if(!data)return"";
+    final address = await _firebaseFirestore.collection("address").where("uid",isEqualTo: _auth.currentUser!.uid).where("default",isEqualTo: true).get().then((value) => value.docs.map((e) => e.data(),).toList());
         Map<String,dynamic> mapData = {
         "productId": map["productId"],
         "sellerId": map["sellerId"],
-        "colors": map["colors"],
-        "size": map["size"],
-        "BuyerLocationId":uid,
-        "status":"Order Confiremed",
         "uid":uid,
         "orderid":id,
+        "selected_color": selectedColor,
+        "selected_size": selectedSize,
+        "addressid":address.first["id"],
+        "status":0,
+        "orderTime":DateTime.now().toString().split(" ").first,
+        "count":itemCount,
         "time":Timestamp.now()
       };
       await _firebaseFirestore.collection("orders").doc("user").collection(_auth.currentUser!.uid).doc(id).set(mapData);

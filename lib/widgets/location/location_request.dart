@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:location/location.dart';
-import 'package:main_work/features/auth/presentaion/page/auth_page.dart';
 
+import 'package:main_work/features/account/presentaion/widgets/address_adding.dart';
+import 'package:main_work/features/auth/presentaion/page/auth_page.dart';
 import 'package:main_work/features/home/domain/entities/home_entitie.dart';
 
 import '../../features/buying/presentaion/page/order_confrom.dart';
@@ -20,28 +20,31 @@ bool isLocationAddad=false;
 class LocationRequest extends StatelessWidget {
   const LocationRequest({
     Key? key,
-    this.cart,
     this.home,
+    this.cart,
+    this.selectedColor,
+    this.selectedSize,
+    this.itemCount,
+    this.cartSelectedColor,
+    this.cartSelectedSize,
+    this.cartItemCount,
   }) : super(key: key);
-  final List<CartEntities>? cart;
   final HomeDataEntities? home;
+  final List<CartEntities>? cart;
+  final String? selectedColor;
+  final String? selectedSize;
+  final String? itemCount;
+  final List<String>? cartSelectedColor;
+  final List<String>? cartSelectedSize;
+  final List<String>? cartItemCount;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return FutureBuilder(
       future: check(context),
       builder: (context, snapshot){
-        if(FirebaseAuth.instance.currentUser==null)
-        {
-          return SizedBox(width: double.infinity,height: 300,child: Center(child: Stack(
-            children: [
-              MaterialButton(child: Text("Login",style: GoogleFonts.aDLaMDisplay(fontSize: 20),),onPressed: (){
-                Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AuthRoute(appbar: true,),));
-              })
-            ],
-          )));
-        }
+        
         if(snapshot.data==null)
         {
           return const SizedBox(width: double.infinity,height: 300,child: Center(child: CircularProgressIndicator()));
@@ -53,73 +56,30 @@ class LocationRequest extends StatelessWidget {
           }else if (home != null) {
               return OrderConform(
                 data: home!,
+                selectedColor: selectedColor,
+                selectedSize: selectedSize,
               );
             }
           // Navigator.pop(context);
         }
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          showDialog(context: context, builder: (context) => Dialog(shape: Border.all(),child: AddressAddingPage(),),);
+        },);
         return SizedBox(
           height: 300,
-          child: Stack(
-            children: [
-              MaterialButton(onPressed: ()async{
-                await getLocation();
-                await storeLocation();
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pop();
-              },child: const Center(child: Text("Set this Location"),),)
-            ],
-          ),
         );
       }
     );
-  }
-  Future<void> getLocation() async {
-    Location location = Location();
-
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-    _locationData = await location.getLocation();
-    if(_locationData.latitude!=null&&_locationData.longitude!=null) {
-      _latitude= _locationData.latitude;
-      _longitude= _locationData.longitude;
-      return;
-    }else{
-      await getLocation();
-    }
-  }
-
-  Future<bool> storeLocation()async{
-    if(_auth.currentUser==null)return false;
-    final uid = _auth.currentUser!.uid;
-    await _firestore.collection("location").doc(uid).set({"locX":_latitude,"locY":_longitude});
-    return true;
   }
   Future<bool> check(context)async{
     try {
       final uid = _auth.currentUser!.uid;
     final st = await _firestore
-            .collection("location")
-            .doc(uid)
+            .collection("address")
+            .where("uid",isEqualTo: _auth.currentUser!.uid)
             .get()
-            .then((value) => value.data());
-    if(st==null)
+            .then((value) => value.docs.map((e) => e.data(),).toList());
+    if(st.isEmpty)
     {
       isLocationAddad=false;
       return false;
@@ -134,3 +94,4 @@ class LocationRequest extends StatelessWidget {
     }
   }
 }
+

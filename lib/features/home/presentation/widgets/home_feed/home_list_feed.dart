@@ -13,9 +13,11 @@ class HomeProductListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
-      child: Wrap(
-        children: List.generate(data.products!.length<=4?data.products!.length:4, (index) => ProductWidget(data: data.products![index],dataList: data,)),
+      width: size.width<=700?null:size.width*0.7,
+      child:Wrap(
+        children: List.generate(data.products!.length<=4?data.products!.length:size.width>=1000?data.products!.length:4, (index) => ProductWidget(data: data.products![index],dataList: data,)),
       ),
     );
   }

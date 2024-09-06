@@ -13,8 +13,7 @@ FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
 class BuyingBloc extends Bloc<BuyingEvent, BuyingState> {
   BuyingBloc() : super(BuyingInitial()) {
-    on<GetFavoritState>((event, emit) async{
-      emit(BuyingInitial());
+    on<GetProductInfo>((event, emit) async{
       List<Map<String,dynamic>> rating=[];
         final box = await Hive.openBox("favorits");
       final favorit = await box.get(event.productId);
@@ -30,7 +29,6 @@ class BuyingBloc extends Bloc<BuyingEvent, BuyingState> {
         }
       }
       } catch (e) {
-        log(">>>>"+e.toString());
       }
       if(rating.isEmpty)
       {

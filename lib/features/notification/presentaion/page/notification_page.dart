@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:main_work/core/theme/themes.dart';
+import 'package:main_work/features/shop/presentaion/widgets/shop_order_widget.dart';
+import '/core/theme/themes.dart';
 
-import 'package:main_work/features/notification/presentaion/page/location.dart';
-import 'package:main_work/main.dart';
+import '/main.dart';
 
 import '../bloc/notification_bloc.dart';
 
@@ -23,14 +23,13 @@ class ScreenNotification extends StatelessWidget {
       builder: (context, state) {
        if(state is NotificationDataState)
        {
-        log(state.data.toString());
          return Scaffold(
           appBar: AppBar(
             title: Text("Notification",style: mainAppTextTheme(20)),
             backgroundColor: theme.background,
           ),
           body: state.data.isNotEmpty? ListView.builder(
-            itemBuilder: (context, index) => NotificationWidget(data: state.data[index],latLng: LatLng(state.location[index]!["locX"], state.location[index]!["locY"]),prodectData: state.productData[index]!,),
+            itemBuilder: (context, index) => ShopOrderSummary(data: state.data[index]),
             itemCount: state.data.length,
           ):Center(child: Text("No data",style: mainAppTextTheme(14),),),
         );
@@ -40,7 +39,7 @@ class ScreenNotification extends StatelessWidget {
             title: Text("Notification",style: mainAppTextTheme(20)),
             backgroundColor: theme.background,
           ),
-          body: Center(child: CircularProgressIndicator(color: Colors.green,),),
+          body: const Center(child: CircularProgressIndicator(color: Colors.green,),),
         );
        }
       },
@@ -62,7 +61,7 @@ class NotificationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => OrderLocation(latLng: latLng,data: data,productData: prodectData,),)),
+      // onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => ,)),//TODO ad order details
       child: Container(
         margin: const EdgeInsets.only(top: 4, left: 10, right: 10),
         padding: const EdgeInsets.all(10),
@@ -80,8 +79,8 @@ class NotificationWidget extends StatelessWidget {
               Row(
                 children: [
                   Text(prodectData["productName"].toString(),style: GoogleFonts.aBeeZee(),),
-                  SizedBox(width: 10,),
-                  Text(data["status"].toString(),style: TextStyle(color: Colors.black),),
+                  const SizedBox(width: 10,),
+                  Text(data["status"].toString(),style: const TextStyle(color: Colors.black),),
                 ],
               ),
               const Text("Location 1/km")

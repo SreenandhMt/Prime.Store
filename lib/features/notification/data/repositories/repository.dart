@@ -6,9 +6,9 @@ class NotificationRepositoryImp implements NotificationRepository{
   final NotificationDataSource _dataSource;
   NotificationRepositoryImp(this._dataSource);
 
-  @override
-  Future<void> updateNotification({required String status, required String id, required Map<String, dynamic> data}) {
-   return _dataSource.updateNotification(status: status, id: id, data: data);
-  }
+  // @override
+  // Future<void> updateNotification({required String status, required String id, required Map<String, dynamic> data}) {
+  //  return _dataSource.updateNotification(status: 0, id: id, data: );
+  // }
   
 }

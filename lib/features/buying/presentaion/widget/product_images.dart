@@ -26,6 +26,56 @@ class _BuyingPageImagesState extends State<BuyingPageImages> {
   }
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    if(size.width>=1000)
+    {
+      return ValueListenableBuilder(
+            valueListenable: currentImageUrl,
+            builder: (context, val, _) {
+        return Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                            constraints: BoxConstraints(minHeight: size.height*0.05),
+                            child: Image.network(
+              currentImageUrl.value,
+              width: size.width*.3,
+              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+            ),
+            height10,
+            if(widget.homeData.productUrls!.length>1)
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                  children: List.generate(
+                    widget.homeData.productUrls!.length,
+                    (index) => GestureDetector(
+                      onTap: () {
+                        _currentIndex=index;
+                        currentImageUrl.value = widget.homeData.productUrls![index];
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 5),
+                        height: _currentIndex==index? 60: 50,
+                        width: _currentIndex==index? 60 : 55,
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 1.5),
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                                image: NetworkImage(widget.homeData.productUrls![index]))),
+                      ),
+                    ),
+                  )),
+            )
+          ],
+        );
+      }
+    );
+    }
     return ValueListenableBuilder(
             valueListenable: currentImageUrl,
             builder: (context, val, _) {

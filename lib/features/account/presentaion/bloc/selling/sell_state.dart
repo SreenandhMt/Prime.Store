@@ -5,7 +5,7 @@ sealed class SellState {}
 
 final class SellInitial extends SellState {}
 final class SelledProdects extends SellState {
-  final List<AccountSellingDataEntities> data;
+  final List<HomeDataEntities> data;
 
   SelledProdects({required this.data});
 }

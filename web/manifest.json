@@ -1,6 +1,6 @@
 {
-    "name": "main_work",
-    "short_name": "main_work",
+    "name": "prime_store",
+    "short_name": "prime_store",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

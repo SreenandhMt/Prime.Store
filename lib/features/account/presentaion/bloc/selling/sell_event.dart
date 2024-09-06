@@ -15,14 +15,14 @@ final class UpdateProducts extends SellEvent {
   final String productName;
   final String id;
   final String productAbout;
-  final List<dynamic> producthigh;
   final String productType;
   final dynamic price;
-  final List<dynamic>? colorsList;
-  final List<dynamic>? sizeList;
-  final List<dynamic> imageList;
+  final String sellerId;
+  final List<String>? colorsList;
+  final List<String>? sizeList;
+  final List<String> imageList;
 
-  UpdateProducts({required this.productName, required this.id, required this.productAbout, required this.producthigh, required this.productType, required this.price, required this.colorsList, required this.sizeList, required this.imageList});
+  UpdateProducts({required this.productName, required this.id, required this.productAbout, required this.productType, required this.price, required this.sellerId, required this.colorsList, required this.sizeList, required this.imageList});
 
 }
 

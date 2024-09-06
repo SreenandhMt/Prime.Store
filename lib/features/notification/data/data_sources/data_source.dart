@@ -1,34 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:main_work/features/account/domain/entities/account_orders_entities.dart';
 
 FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
 class NotificationDataSource {
   Future<void> updateNotification(
-      {required String status,
+      {required int status,
       required String id,
-      required Map<String, dynamic> data}) async {
-    final map = {
-      "productId": data["productId"],
-      "sellerId": data["sellerId"],
-      "colors": data["colors"],
-      "size": data["size"],
-      "BuyerLocationId": data["BuyerLocationId"],
-      "status": status,
-      "uid": data["uid"],
-      "orderid": data["orderid"],
-      "time": data["time"]
+      required AccountOrdersDataEntities data}) async {
+        final map = data.orderMap!; 
+    final updateData = {
+          "productId": map["productId"],
+        "sellerId": map["sellerId"],
+        "uid":map["uid"],
+        "orderid":map["orderid"],
+        "selected_color": map["selected_color"],
+        "selected_size": map["selected_size"],
+        "addressid":map["addressid"],
+        "status":status,
+        "orderTime":map["orderTime"],
+        "count":map["count"],
+        "time":map["time"]
     };
     await _firebaseFirestore
         .collection("orders")
         .doc("shop")
-        .collection(data["sellerId"])
-        .doc(data["orderid"])
-        .update(map);
+        .collection(map["sellerId"])
+        .doc(map["orderid"])
+        .update(updateData);
     await _firebaseFirestore
         .collection("orders")
         .doc("user")
-        .collection(data["uid"])
-        .doc(data["orderid"])
-        .update(map);
+        .collection(map["uid"])
+        .doc(map["orderid"])
+        .update(updateData);
   }
 }

@@ -18,7 +18,7 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    if (size.width <= 500) {
+    // if (size.width <= 500) {
       return GestureDetector(
         onTap: () {
           if(dataList!=null)
@@ -30,8 +30,8 @@ class ProductWidget extends StatelessWidget {
         },
         child: Container(
           margin: const EdgeInsets.all(3.5),
-          width: (size.width / 2) * 0.96,
-          height: (size.width) * 0.68,
+          width: size.width <= 700 ? (size.width / 2 ) * 0.96:size.width <= 1300?(size.width) * 0.21: size.width * 0.18,
+          height: size.width <= 700 ? (size.width) * 0.7:size.width <= 1300?(size.width) * 0.33 : (size.width) * 0.26,
           decoration: BoxDecoration(color: theme.primary,borderRadius: BorderRadius.circular(10)),
           child: Stack(
             children: [
@@ -54,21 +54,6 @@ class ProductWidget extends StatelessWidget {
           ),
         ),
       );
-    } else {
-      return Container(
-        height: 500,
-        width: 300,
-        margin: const EdgeInsets.all(3.5),
-        color: theme.primary,
-        child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-                width: (size.width / 2) * 0.95,
-                height: 80,
-                decoration: BoxDecoration(color: theme.primary,),
-                child: ProductText(data: data,))),
-      );
-    }
   }
 
 }
@@ -89,10 +74,10 @@ class ProductText extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(data.productName??"",style: TextStyle(color: theme.tertiary),),
+          Text(data.productName??"",style: TextStyle(), maxLines: 1,overflow: TextOverflow.clip),
           Text(
             data.productAbout??"",
-            style: TextStyle(),
+            style: TextStyle(color: theme.tertiary),
             maxLines: 1,
             overflow: TextOverflow.clip,
           ),
@@ -141,18 +126,16 @@ class ProductLoadingWidget extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Container(
               margin: const EdgeInsets.all(3.5),
-              width: (size.width / 2) * 0.96,
-              height: (size.width) * 0.68,
+             width: size.width <= 1000 ? (size.width / 2 ) * 0.96:size.width <= 1300?(size.width) * 0.21: size.width * 0.18,
+          height: size.width <= 700 ? (size.width) * 0.7:size.width <= 1300?(size.width) * 0.33 : (size.width) * 0.26,
               decoration: BoxDecoration(color:theme.primary,),
-              child: Stack(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-       width: (size.width / 2) * 0.95,
-       height: (size.width) * 0.28,
-       color: Theme.of(context).colorScheme.primary,
-       child: ProductTextForLoading())),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                         color: Theme.of(context).colorScheme.primary,
+                         child: ProductTextForLoading()),
                 ],
               ),
             ).redacted(context: context, redact: true,configuration: RedactedConfiguration());

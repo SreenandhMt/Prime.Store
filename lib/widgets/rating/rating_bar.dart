@@ -58,34 +58,34 @@ Widget ratingWidget(BuildContext context,AccountOrdersDataEntities product){
               child: GestureDetector(onTap: ()async{
                 if(snapshot.data==true)return;
                 final data = await _firestore.collection("products").doc(product.productId!).get().then((value) => value.data());
-                final map = {
-                        "productId": product.productId,
-                        "productUrls": product.map!["productUrls"],
-                        "productName": product.map!["productName"],
-                        "productAbout": product.map!["productAbout"],
-                        "highlights": product.map!["highlights"],
-                        "productType": data!["productType"],
-                        "sellerId": product.sellerId,
-                        "colors": 1,
-                        "colorList": product.map!["colorList"],
-                        "sizeList": product.map!["sizeList"],
-                        "size": "",
-                        "rate1":rating>=1&&rating<=1.9?1+(data["rate1"]??0.0): data["rate1"] ?? 0.0,
-                        "rate2":rating>=2&&rating<=2.9?1+(data["rate2"]??0.0): data["rate2"] ?? 0.0,
-                        "rate3":rating>=3&&rating<=3.9?1+(data["rate3"]??0.0): data["rate3"] ?? 0.0,
-                        "rate4":rating>=4&&rating<=4.9?1+(data["rate4"]??0.0): data["rate4"] ?? 0.0,
-                        "rate5":rating>=5&&rating<=5.9?1+(data["rate5"]??0.0): data["rate5"] ?? 0.0,
-                      };
+                // final map = {
+                //         "productId": product.productId,
+                //         "productUrls": product.map!.productUrls,
+                //         "productName": product.map!.productName,
+                //         "productAbout": product.map!["productAbout"],
+                //         "highlights": product.map!["highlights"],
+                //         "productType": data!["productType"],
+                //         "sellerId": product.sellerId,
+                //         "colors": 1,
+                //         "colorList": product.map!["colorList"],
+                //         "sizeList": product.map!["sizeList"],
+                //         "size": "",
+                //         "rate1":rating>=1&&rating<=1.9?1+(data["rate1"]??0.0): data["rate1"] ?? 0.0,
+                //         "rate2":rating>=2&&rating<=2.9?1+(data["rate2"]??0.0): data["rate2"] ?? 0.0,
+                //         "rate3":rating>=3&&rating<=3.9?1+(data["rate3"]??0.0): data["rate3"] ?? 0.0,
+                //         "rate4":rating>=4&&rating<=4.9?1+(data["rate4"]??0.0): data["rate4"] ?? 0.0,
+                //         "rate5":rating>=5&&rating<=5.9?1+(data["rate5"]??0.0): data["rate5"] ?? 0.0,
+                //       };
                 if(reviewController.text.isNotEmpty)
                 {
                   await _firestore.collection("raring").doc(product.productId!).collection("rating").doc(_auth.currentUser!.uid).set({"uid":_auth.currentUser!.uid,"rating":rating,"review":reviewController.text});
                 }else{
                   await _firestore.collection("raring").doc(product.productId!).collection("rating").doc(_auth.currentUser!.uid).set({"uid":_auth.currentUser!.uid,"rating":rating});
                 }
-                await _firestore
-                          .collection("products")
-                          .doc(product.productId!)
-                          .set(map);
+                // await _firestore
+                //           .collection("products")
+                //           .doc(product.productId!)
+                //           .set(map);
                 // ignore: use_build_context_synchronously
                 Navigator.pop(context);
               },child: Container(width:double.infinity,height: size.width*0.14,decoration:BoxDecoration(color:  Colors.grey,borderRadius: BorderRadius.circular(10)),child: Center(child: Text("Submit",style: GoogleFonts.pottaOne(fontSize:18),)),)),

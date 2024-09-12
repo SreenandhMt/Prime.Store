@@ -19,8 +19,8 @@ class MoreProduct extends StatelessWidget {
       children: [
         Column(
           children: [
-            TextDivider(text: "More Products"),
-            SizedBox(height: 10,),
+            const TextDivider(text: "More Products"),
+            const SizedBox(height: 10,),
             Padding(
               padding: const EdgeInsets.only(left: 6),
               child: LimitedBox(
@@ -28,8 +28,8 @@ class MoreProduct extends StatelessWidget {
               maxHeight:size.width <= 700 ? (size.width) * 0.7:size.width <= 1300?(size.width) * 0.33 : (size.width) * 0.26,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: List.generate(dataList!.products!.length,
-                      (index) => ProductWidget(data: dataList!.products![index],dataList: dataList,)),
+                  children: List.generate(dataList.products!.length,
+                      (index) => ProductWidget(data: dataList.products![index],dataList: dataList,)),
                 ),
               ),
             ),

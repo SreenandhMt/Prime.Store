@@ -4,7 +4,6 @@ import 'package:main_work/core/theme/themes.dart';
 
 import 'package:main_work/features/account/domain/entities/account_orders_entities.dart';
 import 'package:main_work/features/account/presentaion/bloc/bloc/account_bloc.dart';
-import 'package:main_work/main.dart';
 import 'package:order_tracker_zen/order_tracker_zen.dart';
 
 import '../../../notification/data/data_sources/data_source.dart';
@@ -68,7 +67,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                                 maxLines: 4,
                               ),
                               const SizedBox(height: 4),
-                              Text("₹"+widget.data.map!.map!["price"].toString()??"" + ".0"),
+                              Text("₹${widget.data.map!.map!["price"]}"),
                               const SizedBox(height: 4),
                               if(widget.data.colors!=null&&widget.data.colors!.isNotEmpty)
                               Text('Color: ${widget.data.colors}'),

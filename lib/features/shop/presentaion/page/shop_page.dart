@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
-import 'dart:developer';
+// import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -37,7 +37,6 @@ class _ShopPageState extends State<ShopPage> {
     if(_auth.currentUser!.displayName!=null&&_auth.currentUser!.displayName!.isNotEmpty)
     {
       loadData();
-      log("dd");
     }
     super.initState();
   }

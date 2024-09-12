@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:main_work/features/buying/presentaion/page/order_confrom.dart';
 import 'package:main_work/features/buying/presentaion/widget/more_product.dart';
-
 import 'package:main_work/features/buying/presentaion/widget/product_details.dart';
 import 'package:main_work/features/buying/presentaion/widget/product_images.dart';
 import 'package:main_work/features/buying/presentaion/widget/product_text.dart';
@@ -11,7 +11,6 @@ import 'package:main_work/features/buying/presentaion/widget/text_divider.dart';
 import 'package:main_work/main.dart';
 
 import '../../../../core/colors/colors.dart';
-import '../../../../widgets/location/location_request.dart';
 import '../../../cart/presentaion/bloc/cart_bloc.dart';
 import '../../../home/domain/entities/home_category_entities.dart';
 import '../../../home/domain/entities/home_entitie.dart';
@@ -20,39 +19,61 @@ import '../../../selling/selling_page.dart';
 import '../blocs/buying_bloc/buying_bloc.dart';
 import '../page/buying_page.dart';
 
-class DesktopViewBuyingScreen extends StatelessWidget {
+class DesktopViewBuyingScreen extends StatefulWidget {
   const DesktopViewBuyingScreen({
     Key? key,
-    required this.homeData,
-    this.dataList,
+    this.id,
   }) : super(key: key);
-  final HomeDataEntities homeData;
-  final HomeCategoryDataEntities? dataList;
+  final String? id;
 
+  @override
+  State<DesktopViewBuyingScreen> createState() => _DesktopViewBuyingScreenState();
+}
+
+class _DesktopViewBuyingScreenState extends State<DesktopViewBuyingScreen> {
+  HomeDataEntities? homeData;
+  HomeCategoryDataEntities? dataList;
+  bool favoritStatus=false,cartStatus=false;
+  @override
+  void initState() {
+    context
+        .read<BuyingBloc>()
+        .add(GetProductInfo(noData: widget.id!=null,productId: homeData==null?widget.id!:homeData!.productId!));
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final themeCopy = theme;
     final size = MediaQuery.of(context).size;
     return BlocBuilder<BuyingBloc, BuyingState>(builder: (context, state) {
-      return Scaffold(
+      if(homeData==null)
+      {
+        if (state is BuyingPageState) {
+          homeData = state.data;
+          dataList = state.moreProduct;
+          cartStatus = state.cartListAdded;
+          favoritStatus = state.favoritListAdded;
+          context
+        .read<BuyingBloc>()
+        .add(GetProductInfo(noData: widget.id!=null,productId: homeData==null?widget.id!:homeData!.productId!));
+        }
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      }
+      if(state is BuyingPageState)
+      {
+        return Scaffold(
         body: SafeArea(
           child: ListView(
             children: [
-              // appbar
-              BuyingPageAppBar(homeData: homeData),
-
-              //images
-              
-
+              BuyingPageAppBar(homeData: homeData!,favoritStatus: favoritStatus,),
               height10,
-
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const Expanded(child: SizedBox()),
-                  SizedBox(width: size.width*.3,height: size.height*0.8,child: BuyingPageImages(homeData: homeData)),
+                  SizedBox(width: size.width*.3,height: size.height*0.8,child: BuyingPageImages(homeData: homeData!)),
                   const SizedBox(width: 30),
                   Container(
                     width: size.width*.4,
@@ -87,22 +108,22 @@ class DesktopViewBuyingScreen extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      BuyingTexts(homeData: homeData),
+                      BuyingTexts(homeData: homeData!),
                       Row(
                         children: [
-                          if (state is BuyingPageState)
                 GestureDetector(
                   onTap: () async {
-                    state.cartListAdded
+                    cartStatus = !cartStatus;
+                    setState(() {
+                      
+                    });
+                    cartStatus
                         ? context
                             .read<CartBloc>()
-                            .add(CartDeleteData(productId: homeData.productId!))
+                            .add(CartDeleteData(productId: homeData!.productId!))
                         : context
                             .read<CartBloc>()
-                            .add(CartAddData(map: homeData.map!));
-                    context
-                        .read<BuyingBloc>()
-                        .add(GetProductInfo(productId: homeData.productId!));
+                            .add(CartAddData(map: homeData!.map!));
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -125,21 +146,21 @@ class DesktopViewBuyingScreen extends StatelessWidget {
                 ),
               GestureDetector(
                 onTap: () {
-                  if(selectedSize.isEmpty&&homeData.sizeList!.isNotEmpty)
+                  if(selectedSize.isEmpty&&homeData!.sizeList!.isNotEmpty)
                   {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Select a Color")));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(behavior: SnackBarBehavior.floating,margin: const EdgeInsets.all(10),content: Container(child: const Text("Select a Color"),)));
                     return;
                   }
-                  if(selectedColor.isEmpty&&homeData.colorList!.isNotEmpty)
+                  if(selectedColor.isEmpty&&homeData!.colorList!.isNotEmpty)
                   {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Select a Size")));
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Select a Size")));
                     return;
                   }
                   showModalBottomSheet(
                     isDismissible: true,
                     context: context,
                     builder: (context) => OrderConform(
-                      data: homeData,
+                      data: homeData!,
                       selectedColor: selectedColor,
                       selectedSize: selectedSize,
                     ),
@@ -164,8 +185,28 @@ class DesktopViewBuyingScreen extends StatelessWidget {
               ),
                         ],
                       ),
-
-                        ProductDetails(homeData: homeData),
+                        ProductDetails(homeData: homeData!),
+                        const TextDivider(text: "Shop Address"),
+                      height10,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          '${state.shopAddress!.address1},\n'
+                          '${state.shopAddress!.address2},\n'
+                          '${state.shopAddress!.landmark}, ${state.shopAddress!.landmark} ${state.shopAddress!.state} - ${state.shopAddress!.postcode}',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      // Mobile number
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Mobile: +91 ${state.shopAddress!.number}',
+                          style: const TextStyle(
+                              fontSize: 16),
+                        ),
+                      ),
+                      height10,
                       //   height10,
                       if(state is BuyingPageState)
                       reviewAndRating(review: state.review),
@@ -180,6 +221,9 @@ class DesktopViewBuyingScreen extends StatelessWidget {
           ),
         ),
       );
+      }else{
+        return const SizedBox();
+      }
     });
   }
 
@@ -187,9 +231,9 @@ class DesktopViewBuyingScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextDivider(text: "Rating and Review"),
+        const TextDivider(text: "Rating and Review"),
         height10,
-        if (homeData.map != null && homeData.map!["rate1"] != null)
+        if (homeData!.map != null && homeData!.map!["rate1"] != null)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -203,25 +247,25 @@ class DesktopViewBuyingScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   ProgressBar(
-                    homeData: homeData,
+                    homeData: homeData!,
                       ratingCount: "5",
-                      value: homeData.map!["rate5"].toDouble()),
+                      value: homeData!.map!["rate5"].toDouble()),
                  ProgressBar(
-                    homeData: homeData,
+                    homeData: homeData!,
                       ratingCount: "4",
-                      value: homeData.map!["rate4"].toDouble()),
+                      value: homeData!.map!["rate4"].toDouble()),
                   ProgressBar(
-                    homeData: homeData,
+                    homeData: homeData!,
                       ratingCount: "3",
-                      value: homeData.map!["rate3"].toDouble()),
+                      value: homeData!.map!["rate3"].toDouble()),
                   ProgressBar(
-                    homeData: homeData,
+                    homeData: homeData!,
                       ratingCount: "2",
-                      value: homeData.map!["rate2"].toDouble()),
+                      value: homeData!.map!["rate2"].toDouble()),
                   ProgressBar(
-                    homeData: homeData,
+                    homeData: homeData!,
                       ratingCount: "1",
-                      value: homeData.map!["rate1"].toDouble()),
+                      value: homeData!.map!["rate1"].toDouble()),
                 ],
               )
             ],
@@ -240,14 +284,15 @@ class DesktopViewBuyingScreen extends StatelessWidget {
       ],
     );
   }
+
   String ratingText() {
     dynamic top, rateindex;
     for (var i = 1; i <= 5; i++) {
       if (i == 1) {
-        top = homeData.map!["rate$i"];
+        top = homeData!.map!["rate$i"];
         rateindex = i;
-      } else if (homeData.map!["rate$i"] > top) {
-        top = homeData.map!["rate$i"];
+      } else if (homeData!.map!["rate$i"] > top) {
+        top = homeData!.map!["rate$i"];
         rateindex = i;
       }
     }

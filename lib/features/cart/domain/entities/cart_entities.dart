@@ -28,7 +28,6 @@ class CartEntities extends Equatable {
   });
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
     productUrls,
     productName,

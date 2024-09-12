@@ -62,12 +62,12 @@ class _OrderConformState extends State<OrderConform> {
                       width: size.width <= 1000
                           ? size.width * 0.6
                           : size.width * 0.3,
-                      child: AuthGate()),
+                      child: const AuthGate()),
                 ),
               );
             },
           );
-          return SizedBox(
+          return const SizedBox(
               width: double.infinity,
               height: 300,
               child: Center(
@@ -82,13 +82,13 @@ class _OrderConformState extends State<OrderConform> {
                 context: context,
                 builder: (context) => Dialog(
                   shape: Border.all(),
-                  child: SizedBox(
+                  child: const SizedBox(
                       child: AddressAddingPage()),
                 ),
               );
             },
           );
-          return SizedBox(
+          return const SizedBox(
               width: double.infinity,
               height: 300,
               child: Center(

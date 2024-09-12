@@ -3,16 +3,13 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
 
 import 'package:main_work/features/account/presentaion/widgets/address_adding.dart';
-import 'package:main_work/features/auth/presentaion/page/auth_page.dart';
 import 'package:main_work/features/home/domain/entities/home_entitie.dart';
 
 import '../../features/buying/presentaion/page/order_confrom.dart';
 import '../../features/cart/domain/entities/cart_entities.dart';
 
-double? _latitude,_longitude;
 FirebaseAuth _auth = FirebaseAuth.instance;
 FirebaseFirestore _firestore = FirebaseFirestore.instance;
 bool isLocationAddad=false;
@@ -40,7 +37,7 @@ class LocationRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     return FutureBuilder(
       future: check(context),
       builder: (context, snapshot){
@@ -63,9 +60,9 @@ class LocationRequest extends StatelessWidget {
           // Navigator.pop(context);
         }
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          showDialog(context: context, builder: (context) => Dialog(shape: Border.all(),child: AddressAddingPage(),),);
+          showDialog(context: context, builder: (context) => Dialog(shape: Border.all(),child: const AddressAddingPage(),),);
         },);
-        return SizedBox(
+        return const SizedBox(
           height: 300,
         );
       }
@@ -73,7 +70,7 @@ class LocationRequest extends StatelessWidget {
   }
   Future<bool> check(context)async{
     try {
-      final uid = _auth.currentUser!.uid;
+      // final uid = _auth.currentUser!.uid;
     final st = await _firestore
             .collection("address")
             .where("uid",isEqualTo: _auth.currentUser!.uid)

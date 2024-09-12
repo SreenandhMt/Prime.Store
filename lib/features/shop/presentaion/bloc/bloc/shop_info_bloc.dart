@@ -25,12 +25,16 @@ class ShopInfoBloc extends Bloc<ShopInfoEvent, ShopInfoState> {
   ShopInfoBloc() : super(ShopInfoInitial()) {
     on<GetSelledDatas>((event, emit) async{
       try {
-        if(_auth.currentUser==null)return;
+        if(_auth.currentUser==null)
+        {
+          emit(NoData());
+          return;
+        }
       final data =await _firestore.collection("products").where("sellerId", isEqualTo: _auth.currentUser!.uid).get().then((value) => value.docs.map((e) => HomeData.formjson(e.data())).toList());
-      final _shopAddress = await _firestore.collection("shop").doc(_auth.currentUser!.uid).collection("more_data").doc("address").get().then((value) => AddressData.formjson( value.data()!),);
-      final _shopData = await _firestore.collection("shop").doc(_auth.currentUser!.uid).get().then((value) => value.data()!,);
+      final shopAddress = await _firestore.collection("shop").doc(_auth.currentUser!.uid).collection("more_data").doc("address").get().then((value) => AddressData.formjson( value.data()!),);
+      final shopData = await _firestore.collection("shop").doc(_auth.currentUser!.uid).get().then((value) => value.data()!,);
       final orders = await _firestore.collection("orders").doc("shop").collection(_auth.currentUser!.uid).get().then((value) => value.docs.map((e) => e.data()).toList());
-      List<Map<String,dynamic>> productList=[];
+      // List<Map<String,dynamic>> productList=[];
       List<AccountOrdersDataEntities> location =[];
       for (var product in orders) {
         final shopLocation = await  _firestore.collection("shop").doc(product["sellerId"]).collection("more_data").doc("address").get().then((value) => AddressData.formjson(value.data()!));
@@ -38,8 +42,9 @@ class ShopInfoBloc extends Bloc<ShopInfoEvent, ShopInfoState> {
         final loc = await _firestore.collection("address").doc(product["addressid"]).get().then((value) => AccountOrdersData.formjson(product,temp,AddressData.formjson(value.data()!),shopLocation));
         location.add(loc);
       }
-      emit(SelledProdects(data: data,shopAddress: _shopAddress,shopData: _shopData,ordersData:location ));
+      emit(SelledProdects(data: data,shopAddress: shopAddress,shopData: shopData,ordersData:location ));
       } catch (e) {
+        log("error $e");
       }
     });
 
@@ -58,7 +63,7 @@ class ShopInfoBloc extends Bloc<ShopInfoEvent, ShopInfoState> {
         List<dynamic> imageUrl = event.imageList;
         if(_auth.currentUser==null)return;
       emit(Uploading());
-      final uid = _auth.currentUser!.uid;
+      // final uid = _auth.currentUser!.uid;
       Map<String, dynamic> mapData = {
         "productId": event.id,
         "productUrls": imageUrl,
@@ -95,7 +100,7 @@ class ShopInfoBloc extends Bloc<ShopInfoEvent, ShopInfoState> {
       final uid = _auth.currentUser!.uid;
       final highlight = event.producthigh.split("_");
       final id = DateTime.now().microsecondsSinceEpoch.toString();
-      log(id);
+      // log(id);
       Map<String, dynamic> mapData = {
         "productId": id,
         "productUrls": imageUrl,
@@ -106,8 +111,8 @@ class ShopInfoBloc extends Bloc<ShopInfoEvent, ShopInfoState> {
         "sellerId": uid,
         "price":event.price,
         "colors": 1,
-        "colorList":event.colorsList??[],
-        "sizeList":event.sizeList??[],
+        "colorList":event.colorsList,
+        "sizeList":event.sizeList,
         "size": "",
       };
 
@@ -118,7 +123,7 @@ class ShopInfoBloc extends Bloc<ShopInfoEvent, ShopInfoState> {
       // final _shopData = await _firestore.collection("shop").doc(_auth.currentUser!.uid).get().then((value) => value.data()!,);
       // emit(SelledProdects(data: data,shopAddress: _shopAddress,shopData: _shopData));
       } catch (e) {
-        log("error "+e.toString());
+        log("error ${e.toString()}");
       }
     });
   }

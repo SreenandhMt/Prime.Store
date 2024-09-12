@@ -12,3 +12,6 @@ final class Error extends AuthState {
 
   Error({required this.error});
 }
+
+final class Success extends AuthState {
+}

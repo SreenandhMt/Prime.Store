@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +15,7 @@ class ScreenNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     context.read<NotificationBloc>().add(NotificationData());
     return BlocConsumer<NotificationBloc, NotificationState>(
       listener: (context, state) {
@@ -23,6 +23,12 @@ class ScreenNotification extends StatelessWidget {
       builder: (context, state) {
        if(state is NotificationDataState)
        {
+        if(size.width>=1000)
+        {
+          return state.data.isNotEmpty? Column(
+            children: List.generate(state.data.length, (index) => ShopOrderSummary(data: state.data[index]),),
+          ):Center(child: Text("No data",style: mainAppTextTheme(14),),);
+        }
          return Scaffold(
           appBar: AppBar(
             title: Text("Notification",style: mainAppTextTheme(20)),
@@ -34,6 +40,10 @@ class ScreenNotification extends StatelessWidget {
           ):Center(child: Text("No data",style: mainAppTextTheme(14),),),
         );
        }else{
+        if(size.width>=1000)
+        {
+          return const Center(child: CircularProgressIndicator(color: Colors.green,),);
+        }
         return Scaffold(
           appBar: AppBar(
             title: Text("Notification",style: mainAppTextTheme(20)),

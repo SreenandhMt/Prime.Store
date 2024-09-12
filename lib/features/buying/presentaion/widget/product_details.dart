@@ -1,14 +1,13 @@
-import 'dart:developer';
+// import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:main_work/core/theme/themes.dart';
 
 import '../../../../main.dart';
 import '../../../home/domain/entities/home_entitie.dart';
 import '../page/buying_page.dart';
 
-int _currentColor = -1, _currentSize = -1,_currentColorColum = 0,_currentSizeColum = 0;
+int _currentColor = -1, _currentSize = -1,_currentSizeColum = 0;
 String selectedColor="",selectedSize="";
 
 class ProductDetails extends StatefulWidget {

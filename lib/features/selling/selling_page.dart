@@ -270,9 +270,9 @@ class _SellingPageState extends State<SellingPage> {
                           setState(() {});
                         },
                         child: Container(
-                          margin: EdgeInsets.all(6),
+                          margin: const EdgeInsets.all(6),
                               width: 70,
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
                                   color: Colors.grey),
@@ -538,9 +538,9 @@ class _SellingPageState extends State<SellingPage> {
                                 setState(() {});
                               },
                               child: Container(
-                                margin: EdgeInsets.all(6),
+                                margin: const EdgeInsets.all(6),
                                     width: 70,
-                                    padding: EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
                                         color: Colors.grey),

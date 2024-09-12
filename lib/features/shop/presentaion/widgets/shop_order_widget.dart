@@ -40,12 +40,12 @@ class ShopOrderSummary extends StatelessWidget {
                       Text(
                         '${data.map!.productName}',
                         maxLines: 2,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
                       ),
-                      Text(
+                      const Text(
                         'Item(s) 1',
                         style: TextStyle(
                           color: Colors.grey,
@@ -78,24 +78,24 @@ class ShopOrderSummary extends StatelessWidget {
                     children: [
                       Text(
                         data.map!.productAbout!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w400,
                         ),
                         maxLines: 2,
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Text(
                       "₹${data.map!.map!["price"]??""}.00",
-                        style: TextStyle(
+                        style: const TextStyle(
                         ),
                       ),
                       Text(
                         'Color: ${data.colors}, Size: ${data.size}, 1 Item(s)',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.grey,
                         ),
                       ),
-                      Text(
+                      const Text(
                         'SKU 1126021-S',
                         style: TextStyle(
                           color: Colors.grey,

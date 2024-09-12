@@ -42,14 +42,14 @@ class _ScreenAccountState extends State<ScreenAccount>
     final size = MediaQuery.of(context).size;
     if(size.width>=1000)
     {
-      return ProfileScreen();
+      return const ProfileScreen(pageNumber: 1,);
     }
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-    context.read<ShopInfoBloc>().add(GetSelledDatas());
-    context.read<AccountBloc>().add(GetOrderList());
+            context.read<ShopInfoBloc>().add(GetSelledDatas());
+            context.read<AccountBloc>().add(GetOrderList());
           return Scaffold(
             appBar: AppBar(
               title: Text(
@@ -96,7 +96,7 @@ class _ScreenAccountState extends State<ScreenAccount>
                     builder: (context, state) {
                       if(state is AccountInitial)
                       {
-                        return Center(child: CircularProgressIndicator(),);
+                        return const Center(child: CircularProgressIndicator(),);
                       }
                       if (state is GetAccountDatas) {
                         return TabBarView(
@@ -128,16 +128,16 @@ class _ScreenAccountState extends State<ScreenAccount>
                               children: [
                                 if(state.profile!=null)
                                 Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   child: ProfileWidget(profile: state.profile!,),
                                 ),
-                                AddressCard()
+                                const AddressCard()
                               ],
                             )
                           ],
                         );
                       } else {
-                        return SizedBox();
+                        return const SizedBox();
                       }
                     },
                   ),

@@ -39,15 +39,15 @@ class _ShopProfileState extends State<ShopProfile> {
             const Divider(height: 1,color: Colors.black26,),
             Row(
               children: [
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Text(
                       'Orders Info (${state.ordersData.length})',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
               ],
             ),
             if(state.ordersData.isEmpty)
-                        SizedBox(height:40)
+                        const SizedBox(height:40)
                         else
                         Column(
                           children: List.generate(state.ordersData.length, (index) => ShopOrderSummary(data:state.ordersData[index],)),
@@ -56,21 +56,21 @@ class _ShopProfileState extends State<ShopProfile> {
             const SizedBox(height:20),
             Row(
               children: [
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                           'Store Address',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         
                         Text(state.shopAddress.address1??""),
                         Text(state.shopAddress.address2??""),
                         Text('${state.shopAddress.landmark}, ${state.shopAddress.city}, ${state.shopAddress.state}'),
                         Text(state.shopAddress.postcode??""),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                   ],
                 ),
               ],
@@ -96,10 +96,10 @@ class _ShopProfileState extends State<ShopProfile> {
             ),
             Row(
               children: [
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Text(
                       'Orders History (${state.ordersData.length})',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
               ],
             ),
@@ -111,8 +111,10 @@ class _ShopProfileState extends State<ShopProfile> {
             //             ),
           ],
         );
-          }else{
-            return Center(child: CircularProgressIndicator(),);
+          }else if(state is NoData){
+            return Center(child: Text("Create Shop"));
+          } else{
+            return const Center(child: CircularProgressIndicator(),);
           }
         }
         );

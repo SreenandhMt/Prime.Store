@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +8,8 @@ import 'package:main_work/features/home/presentation/pages/home_page.dart';
 import 'package:main_work/features/notification/presentaion/page/notification_page.dart';
 
 import '../core/theme/themes.dart';
-import '../features/search/pages/search_page.dart';
+import '../features/auth/presentaion/page/auth_page.dart';
+import '../features/home/presentation/widgets/search_page.dart';
 import '../main.dart';
 
 const page = [
@@ -82,101 +84,130 @@ class _BottomNavigationState extends State<BottomNavigation> {
       }
     );
   }
-  Widget AppBar(Size size,BuildContext context){
-    return Container(
-      color: Colors.transparent,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    width10,
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      onTap: () {
-                        scaffoldkey.currentState!.openDrawer();
-                      },
-                      child: SizedBox(
-                        child: Center(child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left:4,top: 4),
-                            child: Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,theme.brightness == Brightness.dark?Colors.green:Colors.yellow)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 3,top: 3),
-                            child: Text("STORE",style: textTheme( size.width<=1000?size.width*0.06:size.width*0.027,Colors.pinkAccent)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 2,top: 2),
-                            child: Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,theme.brightness== Brightness.dark?Colors.green:Colors.deepPurple)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 1,top: 1),
-                            child: Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,Colors.black)),
-                          ),
-                          Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,theme.brightness == Brightness.dark?Colors.white:theme.secondary)),
-                        ],
-                      ),),),
-                    ),
-                    const Expanded(child: SizedBox()),
-                    LimitedBox(
-                        maxWidth: (size.width * 0.45),
-                        maxHeight: 100,
-                        child: CupertinoSearchTextField(
-                          keyboardType: TextInputType.none,
-                          padding: const EdgeInsets.all(15),
-                          itemSize: 25,
-                          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SearchPage(),)),
-                        )),
-                    const Expanded(child: SizedBox()),
-                    IconButton(
-                      padding: EdgeInsets.all(0),
-                      onPressed: (){
-                        value.value=2;
-                      },
-                      icon: const Icon(
-                        Icons.favorite,
-                        size: 30,
-                        color: Colors.grey,
+  Widget appBar(Size size,BuildContext context){
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        return Container(
+          color: Colors.transparent,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        width10,
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          onTap: () {
+                            scaffoldkey.currentState!.openDrawer();
+                          },
+                          child: SizedBox(
+                            child: Center(child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left:4,top: 4),
+                                child: Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,theme.brightness == Brightness.dark?Colors.green:Colors.yellow)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 3,top: 3),
+                                child: Text("STORE",style: textTheme( size.width<=1000?size.width*0.06:size.width*0.027,Colors.pinkAccent)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 2,top: 2),
+                                child: Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,theme.brightness== Brightness.dark?Colors.green:Colors.deepPurple)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 1,top: 1),
+                                child: Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,Colors.black)),
+                              ),
+                              Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,theme.brightness == Brightness.dark?Colors.white:theme.secondary)),
+                            ],
+                          ),),),
+                        ),
+                        const Expanded(child: SizedBox()),
+                        LimitedBox(
+                            maxWidth: (size.width * 0.45),
+                            maxHeight: 100,
+                            child: CupertinoSearchTextField(
+                              keyboardType: TextInputType.none,
+                              padding: const EdgeInsets.all(15),
+                              itemSize: 25,
+                              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SearchPage(),)),
+                            )),
+                        const Expanded(child: SizedBox()),
+                        if(snapshot.hasData)
+                        iconsForAppBar()
+                        else
+                        MaterialButton(onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        // shape: Border.all(),
+                        child: Container(
+                            padding: EdgeInsets.only(top: 20, bottom: 20),
+                            width: size.width <= 1000
+                                ? size.width * 0.6
+                                : size.width * 0.3,
+                            child: Scaffold(body: const AuthGate())),
                       ),
+                    );
+                  })
+                      ],
                     ),
-                    width10,
-                    IconButton(
-                      padding: EdgeInsets.all(0),
-                      onPressed: (){
-                        value.value=2;
-                      },
-                      icon: const Icon(
-                        Icons.shopping_bag_rounded,
-                        size: 30,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    width10,
-                    IconButton(
-                      padding: EdgeInsets.all(0),
-                      onPressed: (){
-                        value.value=1;
-                      },
-                      icon: const Icon(
-                        Icons.notifications,
-                        size: 30,
-                        color: Colors.grey,
-                      ),
-                    ),
-                     width10,
-                    PopupMenuButton(
-                      child: CircleAvatar(radius: 14,),
-                      itemBuilder: (context) {
-                      return [
-                        PopupMenuItem(child: Text("Profile")),
-                        PopupMenuItem(child: Text("Orders")),
-                        PopupMenuItem(child: Text("wishlist")),
-                        PopupMenuItem(child: Text("logout"))
-                      ];
-                    },),
-                    width10,
-                  ],
-                ),
+        );
+      }
+    );
+  }
+
+  Widget iconsForAppBar(){
+    return Row(
+      children: [
+        IconButton(
+                          padding: const EdgeInsets.all(0),
+                          onPressed: (){
+                            value.value=2;
+                          },
+                          icon: const Icon(
+                            Icons.favorite,
+                            size: 30,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        width10,
+                        IconButton(
+                          padding: const EdgeInsets.all(0),
+                          onPressed: (){
+                            value.value=2;
+                          },
+                          icon: const Icon(
+                            Icons.shopping_bag_rounded,
+                            size: 30,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        width10,
+                        IconButton(
+                          padding: const EdgeInsets.all(0),
+                          onPressed: (){
+                            value.value=1;
+                          },
+                          icon: const Icon(
+                            Icons.notifications,
+                            size: 30,
+                            color: Colors.grey,
+                          ),
+                        ),
+                         width10,
+                        PopupMenuButton(
+                          child: const CircleAvatar(radius: 14,),
+                          itemBuilder: (context) {
+                          return [
+                            const PopupMenuItem(child: Text("Profile")),
+                            const PopupMenuItem(child: Text("Orders")),
+                            const PopupMenuItem(child: Text("wishlist")),
+                            const PopupMenuItem(child: Text("logout"))
+                          ];
+                        },),
+                        width10,
+      ],
     );
   }
 }

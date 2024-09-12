@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:main_work/features/account/presentaion/page/desktop%20widget/desktop_widget.dart';
+import 'package:go_router/go_router.dart';
+import '../../../auth/presentaion/page/auth_page.dart';
+import '../widgets/info_widget.dart';
 import '/bottom_navigation/bottom_navigation.dart';
 import '/core/theme/themes.dart';
 import '../widgets/product_list.dart';
-import '/features/search/pages/search_page.dart';
+import '../widgets/search_page.dart';
 import '/main.dart';
 import 'package:redacted/redacted.dart';
 import '../bloc/home_bloc.dart';
@@ -50,7 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
           body: ListView(
             children: [
               const SizedBox(height: 10,),
-              AppBar(size, context),
+              if(size.width>=1000)
+              appBarForWeb(size,context)
+              else
+              appBar(size, context),
               const SizedBox(
                 height: 10,
               ),
@@ -116,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: mainAppTextTheme(20.0),
                       ),
                       const Expanded(child: SizedBox()),
-                      if(state.data[index].products!.length>=4)
+                      if(state.data[index].products!.length>4&&size.width<=1000)
                       GestureDetector(
                         onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductList(data: state.data[index].products!),)),
                         child: Text(
@@ -149,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
                 ],
               ),
-              FooterScreen(),
+              const FooterScreen(),
             ],
           ),
         );
@@ -157,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget AppBar(Size size,BuildContext context){
+  Widget appBar(Size size,BuildContext context){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -199,8 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   IconButton(
                     padding: const EdgeInsets.all(0),
                     onPressed: (){
-                      currentIndex = 3;
-                      value.value=2;
+                      context.go("/Settings/3");
                     },
                     icon: const Icon(
                       Icons.favorite_border,
@@ -214,8 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: (){
                       if(size.width>=1000)
                       {
-                        currentIndex = 6;
-                      value.value=2;
+                        context.go("/Settings/6");
                         return;
                       }else{
                         value.value=3;
@@ -234,8 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: (){
                       if(size.width>=1000)
                       {
-                        currentIndex = 7;
-                      value.value=2;
+                       context.go("/Settings/7");
                         return;
                       }else{
                         value.value=1;
@@ -251,197 +254,132 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               );
   }
-}
 
-
-class FooterScreen extends StatefulWidget {
-  @override
-  State<FooterScreen> createState() => _FooterScreenState();
-}
-
-class _FooterScreenState extends State<FooterScreen> {
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: 40),
-              Divider(height: 1,color: Colors.black26),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildFeature(Icons.verified, 'Premium Quality', 'All the clothing products are made from 100% premium quality fabric.'),
-                _buildFeature(Icons.lock, 'Secure Payments', 'Highly Secured SSL-Protected Payment Gateway.'),
-                _buildFeature(Icons.refresh, '7 Days Return', 'Return or exchange the orders within 7 days of delivery.'),
-              ],
-            ),
-          ),
-          // Footer Information
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: size.width>=1000?CrossAxisAlignment.center:CrossAxisAlignment.start,
-              children: [
-               if(size.width>=1000)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Registered Office Address
-                    _buildFooterColumn(
-                      'REGISTERED OFFICE ADDRESS',
-                      [
-                        'Powerlook Apparels Pvt Ltd',
-                        'Lotus Corporate Park Wing G02 - 1502,',
-                        'Ram Mandir Lane, off Western Express',
-                        'Highway, Goregaon, Mumbai, 400063',
-                      ],
-                    ),
-                    
-                    // Useful Links
-                    _buildFooterColumn(
-                      'USEFUL LINKS',
-                      [
-                        'About Us',
-                        'Shipping Policy',
-                        'Privacy Policy',
-                        'Affiliate Programme',
-                        'Sitemap',
-                      ],
-                    ),
-                    
-                    // Categories
-                    _buildFooterColumn(
-                      'CATEGORIES',
-                      [
-                        'T-Shirts',
-                        'Shirts',
-                        'Bottoms',
-                        'Jacket',
-                        'Co-ords',
-                        'Accessories',
-                      ],
-                    ),
-                    
-                    // Support
-                    _buildFooterColumn(
-                      'SUPPORT',
-                      [
-                        'Mail: support@powerlook.in',
-                        'Phone: +91 969-6333-000',
-                      ],
-                    ),
-                  ],
-                )else Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Registered Office Address
-                    _buildFooterColumn(
-                      'REGISTERED OFFICE ADDRESS',
-                      [
-                        'Powerlook Apparels Pvt Ltd',
-                        'Lotus Corporate Park Wing G02 - 1502,',
-                        'Ram Mandir Lane, off Western Express',
-                        'Highway, Goregaon, Mumbai, 400063',
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    // Useful Links
-                    _buildFooterColumn(
-                      'USEFUL LINKS',
-                      [
-                        'About Us | Shipping Policy | Privacy Policy | Affiliate Programme | Sitemap'
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    // Categories
-                    _buildFooterColumn(
-                      'CATEGORIES',
-                      [
-                        'T-Shirts | Shirts | Bottoms | Jacket | Co-ords | Accessories',
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    // Support
-                    _buildFooterColumn(
-                      'SUPPORT',
-                      [
-                        'Mail: support@powerlook.in',
-                        'Phone: +91 969-6333-000',
-                      ],
-                    ),
-                  ],
-                ),
-                
-                const SizedBox(height: 20),
-                
-                // Payment Methods & Social Media
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('100% Secure Payment'),
-                    Row(
+   Widget appBarForWeb(Size size,BuildContext context){
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        return Container(
+          color: Colors.transparent,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.network('https://www.powerlook.in/icons/payments-logo.svg?aio=w-256', height: 20),
+                        width10,
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          onTap: () {
+                          },
+                          child: SizedBox(
+                            child: Center(child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left:4,top: 4),
+                                child: Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,theme.brightness == Brightness.dark?Colors.green:Colors.yellow)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 3,top: 3),
+                                child: Text("STORE",style: textTheme( size.width<=1000?size.width*0.06:size.width*0.027,Colors.pinkAccent)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 2,top: 2),
+                                child: Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,theme.brightness== Brightness.dark?Colors.green:Colors.deepPurple)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 1,top: 1),
+                                child: Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,Colors.black)),
+                              ),
+                              Text("STORE",style: textTheme(size.width<=1000?size.width*0.06:size.width*0.027,theme.brightness == Brightness.dark?Colors.white:theme.secondary)),
+                            ],
+                          ),),),
+                        ),
+                        const Expanded(child: SizedBox()),
+                        LimitedBox(
+                            maxWidth: (size.width * 0.45),
+                            maxHeight: 100,
+                            child: CupertinoSearchTextField(
+                              keyboardType: TextInputType.none,
+                              padding: const EdgeInsets.all(15),
+                              itemSize: 25,
+                              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SearchPage(),)),
+                            )),
+                        const Expanded(child: SizedBox()),
+                        if(snapshot.hasData)
+                        iconsForAppBar()
+                        else
+                        MaterialButton(color: Colors.transparent,shape: Border.all(width: 2,color: Colors.red.shade200,style: BorderStyle.solid),padding: EdgeInsets.all(17),onPressed: () {
+                          
+                    showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        shape: Border.all(),
+                        child: Container(
+                            padding: EdgeInsets.only(top: 20, bottom: 20),
+                            width: size.width <= 1000
+                                ? size.width * 0.6
+                                : size.width * 0.3,
+                            child: Scaffold(body: const AuthGate())),
+                      ),
+                    );
+                  },child: Center(child: Text("SignIn",style: mainAppTextTheme(null),),),),
+                  width10
                       ],
                     ),
-                    const Row(
-                      children: [
-                        Icon(Icons.facebook, color: Colors.blue),
-                        SizedBox(width: 10),
-                        Icon(Icons.camera, color: Colors.pink),
-                        SizedBox(width: 10),
-                        Icon(Icons.wallet, color: Colors.red),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        );
+      }
     );
   }
 
-  Widget _buildFeature(IconData icon, String title, String description) {
-    final size = MediaQuery.of(context).size;
-    if(size.width<=1000)
-    {
-      return Column(
-      children: [
-        Icon(icon, size: 40),
-        const SizedBox(width: 10),
-            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      ],
-    );
-    }
+  Widget iconsForAppBar(){
     return Row(
       children: [
-        Icon(icon, size: 40),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 5),
-        SizedBox(width: size.width*0.15,child: Text(description, textAlign: TextAlign.start)),
-          ],
-        )
-      ],
-    );
-  }
-
-  Widget _buildFooterColumn(String title, List<String> items) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 10),
-        ...items.map((item) => Text(item)).toList(),
+        IconButton(
+                          padding: const EdgeInsets.all(0),
+                          onPressed: (){
+                            context.go("/Settings/3");
+                          },
+                          icon: const Icon(
+                            Icons.favorite,
+                            size: 30,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        width10,
+                        IconButton(
+                          padding: const EdgeInsets.all(0),
+                          onPressed: (){
+                            context.go("/Settings/6");
+                          },
+                          icon: const Icon(
+                            Icons.shopping_bag_rounded,
+                            size: 30,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        width10,
+                        IconButton(
+                          padding: const EdgeInsets.all(0),
+                          onPressed: (){
+                            context.go("/Settings/7");
+                          },
+                          icon: const Icon(
+                            Icons.notifications,
+                            size: 30,
+                            color: Colors.grey,
+                          ),
+                        ),
+                         width10,
+                        PopupMenuButton(
+                          child: const CircleAvatar(radius: 14,),
+                          padding: EdgeInsets.all(0),
+                          shape: Border.all(),
+                          itemBuilder: (context) {
+                          return [
+                            const PopupMenuItem(child: Text("Profile"),padding: EdgeInsets.only(left: 20,right: 80,bottom: 10,top: 10)),
+                            const PopupMenuItem(child: Text("Orders"),padding: EdgeInsets.only(left: 20,right: 40,bottom: 10,top: 10)),
+                            const PopupMenuItem(child: Text("Wishlist"),padding: EdgeInsets.only(left: 20,right: 40,bottom: 10,top: 10)),
+                            const PopupMenuItem(child: Text("Logout",style: TextStyle(color: Colors.red),),padding: EdgeInsets.only(left: 20,right: 20,bottom: 10,top: 10))
+                          ];
+                        },),
       ],
     );
   }

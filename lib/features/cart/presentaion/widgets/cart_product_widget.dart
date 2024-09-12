@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:main_work/features/home/data/module/home_module.dart';
 
 import '../../../../main.dart';
@@ -39,7 +40,7 @@ class _CartProductWidgetState extends State<CartProductWidget> {
             alignment: Alignment.topLeft,
             child: Row(
               children: [
-                GestureDetector(onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyingPage(homeData: HomeData.formjson(widget.data.map!)),)),child: Image.network(widget.data.productUrls![0],width: 100,)),
+                GestureDetector(onTap: ()=>context.go("/Buy/${widget.data.productId}"),child: Image.network(widget.data.productUrls![0],width: 100,)),
                 // Container(
                 //   margin: const EdgeInsets.all(10),
                 //   height: 90,

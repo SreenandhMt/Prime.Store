@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:main_work/features/account/data/module/account_orders_module.dart';
 import 'package:main_work/features/account/domain/entities/account_orders_entities.dart';
 import 'package:main_work/features/account/presentaion/widgets/order_detail.dart';
 
@@ -93,7 +92,7 @@ class OrderSummary extends StatelessWidget {
                       ),
                       Text(
                         'Color: ${data.colors}, Size: ${data.size}, Sleeves 1 Item(s)',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.grey,
                         ),
                       ),

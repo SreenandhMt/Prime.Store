@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -110,7 +111,10 @@ class _ShopProfileremovethisState extends State<ShopProfileremovethis> {
        _firestore.collection("shop").doc(_auth.currentUser!.uid).collection("more_data").doc("address").get().then((value) => value.data()!,);
        return _firestore.collection("shop").doc(_auth.currentUser!.uid).get().then((value) => value.data()!,);
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
+      return null;
     }
   }
 }

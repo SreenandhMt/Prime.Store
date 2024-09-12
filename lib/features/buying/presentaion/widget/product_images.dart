@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:main_work/features/auth/presentaion/page/auth_page.dart';
-import 'package:main_work/features/buying/presentaion/page/buying_page.dart';
 
 import '../../../home/domain/entities/home_entitie.dart';
 

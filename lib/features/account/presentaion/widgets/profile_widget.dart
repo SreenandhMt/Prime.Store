@@ -46,7 +46,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           const SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () {
-                              showDialog(context: context, builder: (context) => Dialog(shape: Border.all(),child: EditProfilePage(),),);
+                              showDialog(context: context, builder: (context) => Dialog(shape: Border.all(),child: const EditProfilePage(),),);
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.red,

@@ -1,7 +1,7 @@
 
-import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/data_sources/local/accout_data_sources.dart';
 import '../../../domain/entities/account_favorit_entities.dart';
@@ -22,7 +22,9 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       emit(AccountInitial());
     }
       final data = await AccountFavoritDataSources().getData();
+      emit(GetAccountDatas(favoriteData: data,ordersData: [],profile: {}));
       final orderData = await _usecase.getMyOrderHistory(id: _auth.currentUser!.uid);
+      emit(GetAccountDatas(favoriteData: data,ordersData: orderData.data!,profile: {}));
       final profile = await _firestore.collection("profile").doc(_auth.currentUser!.uid).get().then((value) => value.data(),);
       emit(GetAccountDatas(favoriteData: data,ordersData: orderData.data!,profile: profile));
 

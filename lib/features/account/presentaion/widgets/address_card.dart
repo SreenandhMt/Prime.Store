@@ -20,7 +20,7 @@ class _AddressCardState extends State<AddressCard> {
     return FutureBuilder(future: getAddress(), builder:(context, snapshot) {
       if(snapshot.data==null)
       {
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       }
       return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -41,13 +41,13 @@ class _AddressCardState extends State<AddressCard> {
                 children: [
                   Text(
                     '${snapshot.data![index].name}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   Row(
                     children: [
                       GestureDetector(
                         onTap: () {
-                          showDialog(context: context, builder: (context) => Dialog(child: AddressAddingPage(data: snapshot.data![index],),shape: Border.all(),),);
+                          showDialog(context: context, builder: (context) => Dialog(shape: Border.all(),child: AddressAddingPage(data: snapshot.data![index],),),);
                         },
                         child: Text(
                           'EDIT',
@@ -57,7 +57,7 @@ class _AddressCardState extends State<AddressCard> {
                       const SizedBox(width: 16),
                       GestureDetector(
                         onTap: () {
-                          showDialog(context: context, builder: (context) => Dialog(child: removeConformDialog(context, snapshot.data![index].id),shape: Border.all(),),);
+                          showDialog(context: context, builder: (context) => Dialog(shape: Border.all(),child: removeConformDialog(context, snapshot.data![index].id),),);
                         },
                         child: const Text(
                           'REMOVE',
@@ -74,13 +74,13 @@ class _AddressCardState extends State<AddressCard> {
                 '${snapshot.data![index].address1},\n'
                 '${snapshot.data![index].address2},\n'
                 '${snapshot.data![index].landmark}, ${snapshot.data![index].landmark} ${snapshot.data![index].state} - ${snapshot.data![index].postcode}',
-                style: TextStyle( fontSize: 16),
+                style: const TextStyle( fontSize: 16),
               ),
               const SizedBox(height: 10),
               // Mobile number
               Text(
                 'Mobile: +91 ${snapshot.data![index].number}',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -96,32 +96,32 @@ class _AddressCardState extends State<AddressCard> {
   }
 
   Widget removeConformDialog(context,id){
-    return Container(
+    return SizedBox(
       width: 300,
       height: 200,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Do you what to delete this address",style: TextStyle(fontSize: 15),),
-          SizedBox(height: 20,),
+          const Text("Do you what to delete this address",style: TextStyle(fontSize: 15),),
+          const SizedBox(height: 20,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               MaterialButton(
                 color: Colors.red,
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 onPressed: () {
             _firestore.collection("address").doc(id).delete();
             setState(() {
               
             });
-          },child: Center(child: Text("Conform"),),),
-          SizedBox(width: 7,),
+          },child: const Center(child: Text("Conform"),),),
+          const SizedBox(width: 7,),
           MaterialButton(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             onPressed: () {
             Navigator.pop(context);
-          },child: Center(child: Text("Cancel",style: TextStyle(color: Colors.red),),),)
+          },child: const Center(child: Text("Cancel",style: TextStyle(color: Colors.red),),),)
             ],
           )
         ],

@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:main_work/features/cart/domain/entities/cart_entities.dart';
 
 import '../../../../home/domain/entities/home_entitie.dart';
@@ -21,7 +21,7 @@ class ConfromBloc extends Bloc<ConfromEvent, ConfromState> {
   final BuyingUsecase _usecase;
   ConfromBloc(this._usecase) : super(ConfromInitial()) {
     on<OrderPlace>((event,emit)async{
-      final state = await CheckRequests();
+      final state = await checkRequests();
       if(state!=null)
       {
         emit(state);
@@ -72,7 +72,7 @@ class ConfromBloc extends Bloc<ConfromEvent, ConfromState> {
     
   }
 
-  Future<ConfromState?> CheckRequests()async{
+  Future<ConfromState?> checkRequests()async{
     if(FirebaseAuth.instance.currentUser==null)
       {
         return LoginRequest();

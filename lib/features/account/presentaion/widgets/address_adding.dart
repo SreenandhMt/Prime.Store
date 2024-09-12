@@ -3,9 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:main_work/core/main_data/module/address_module.dart';
 import 'package:main_work/features/buying/presentaion/blocs/bloc/confrom_bloc.dart';
@@ -170,6 +168,7 @@ class _AddressAddingPageState extends State<AddressAddingPage> {
           {
             return "Fill form";
           }
+          return null;
        },),
       ],
     );
@@ -192,24 +191,23 @@ class _AddressAddingPageState extends State<AddressAddingPage> {
           {
             return "Fill form";
           }
+          return null;
         },)
       ],
     );
   }
 
   Widget removeConformDialog(){
-    return Container(
-      child: Column(
-        children: [
-          Text("Do you what to delete this address"),
-          MaterialButton(onPressed: () {
-            _firestore.collection("address").doc(widget.data!.id).delete();
-          },child: Center(child: Text("Conform"),),),
-          MaterialButton(onPressed: () {
-            Navigator.pop(context);
-          },child: Center(child: Text("Cancel"),),)
-        ],
-      ),
+    return Column(
+      children: [
+        const Text("Do you what to delete this address"),
+        MaterialButton(onPressed: () {
+          _firestore.collection("address").doc(widget.data!.id).delete();
+        },child: const Center(child: Text("Conform"),),),
+        MaterialButton(onPressed: () {
+          Navigator.pop(context);
+        },child: const Center(child: Text("Cancel"),),)
+      ],
     );
   }
 

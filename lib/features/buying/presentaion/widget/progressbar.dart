@@ -39,14 +39,11 @@ class ProgressBar extends StatelessWidget {
   }
   double topRating() {
     dynamic top;
-    int rateindex = 1;
     for (var i = 1; i <= 5; i++) {
       if (i == 1) {
         top = homeData.map!["rate$i"];
-        rateindex = i;
       } else if (homeData.map!["rate$i"] > top) {
         top = homeData.map!["rate$i"];
-        rateindex = i;
       }
     }
     return top.toDouble();

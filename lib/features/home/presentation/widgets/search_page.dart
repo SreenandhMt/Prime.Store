@@ -1,4 +1,4 @@
-import 'dart:developer';
+// import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,9 +27,9 @@ class SearchPage extends StatelessWidget {
               children: [
                 height10,
                 Row(children: [
-                  IconButton(onPressed: ()=>Navigator.pop(context), icon: Icon(Icons.navigate_before_rounded,size: 36,)),
+                  IconButton(onPressed: ()=>Navigator.pop(context), icon: const Icon(Icons.navigate_before_rounded,size: 36,)),
                   width10,
-                  LimitedBox(maxWidth: size.width*0.8,child: CupertinoSearchTextField(onChanged: (value) => getAllData(search: value),padding: EdgeInsets.only(left: 10,right: 10,top: 15,bottom: 15),)),
+                  LimitedBox(maxWidth: size.width*0.8,child: CupertinoSearchTextField(onChanged: (value) => getAllData(search: value),padding: const EdgeInsets.only(left: 10,right: 10,top: 15,bottom: 15),)),
                 ],),
                 height10,
                 Expanded(
@@ -55,9 +55,9 @@ class SearchPage extends StatelessWidget {
     {
        searchQuary = await _firestore.collection("products").get().then((value) => value.docs.map((e) => HomeData.formjson(e.data())).toList());
     }
-    log(searchQuary.toString());
+    // log(searchQuary.toString());
     for (var results in searchQuary) {
-      if(results.productName!.toLowerCase().contains(search.toLowerCase())||results.productAbout!.toLowerCase().contains(search.toLowerCase()))
+      if(results.productName!.toUpperCase().contains(search.toUpperCase())||results.productAbout!.toLowerCase().contains(search.toLowerCase()))
       {
         result.value.add(results);
         result.notifyListeners();

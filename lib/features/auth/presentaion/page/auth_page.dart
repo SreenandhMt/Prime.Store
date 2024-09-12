@@ -54,7 +54,7 @@ class AuthGate extends StatelessWidget {
         return const AuthRoute();
       }else{
         Navigator.pop(context);
-        return SizedBox();
+        return const SizedBox();
       }
     },);
   }

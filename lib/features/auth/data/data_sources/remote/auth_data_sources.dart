@@ -15,7 +15,7 @@ class AuthDataSource {
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-       return e.message;
+       return e.code;
     }
     return null;
    

@@ -40,7 +40,7 @@ class SellBloc extends Bloc<SellEvent, SellState> {
         List<dynamic> imageUrl = event.imageList;
         if(_auth.currentUser==null)return;
       emit(Uploading());
-      final uid = _auth.currentUser!.uid;
+      // final uid = _auth.currentUser!.uid;
       Map<String, dynamic> mapData = {
         "productId": event.id,
         "productUrls": imageUrl,
@@ -57,7 +57,7 @@ class SellBloc extends Bloc<SellEvent, SellState> {
       final data =await _firestore.collection("products").get().then((value) => value.docs.map((e) => HomeData.formjson(e.data())).toList());
       emit(SelledProdects(data: data));
       } catch (e) {
-        log(e.toString());
+        log("error ${e.toString()}");
       }
     });
 
@@ -74,7 +74,6 @@ class SellBloc extends Bloc<SellEvent, SellState> {
       final uid = _auth.currentUser!.uid;
       final highlight = event.producthigh.split("_");
       final id = DateTime.now().microsecondsSinceEpoch.toString();
-      log(id);
       Map<String, dynamic> mapData = {
         "productId": id,
         "productUrls": imageUrl,
@@ -85,8 +84,8 @@ class SellBloc extends Bloc<SellEvent, SellState> {
         "sellerId": uid,
         "price":event.price,
         "colors": 1,
-        "colorList":event.colorsList??[],
-        "sizeList":event.sizeList??[],
+        "colorList":event.colorsList,
+        "sizeList":event.sizeList,
         "size": "",
       };
 
@@ -94,7 +93,7 @@ class SellBloc extends Bloc<SellEvent, SellState> {
       final data =await _firestore.collection("products").where("sellerId",isEqualTo: _auth.currentUser!.uid).get().then((value) => value.docs.map((e) => HomeData.formjson(e.data())).toList());
       emit(SelledProdects(data: data));
       } catch (e) {
-        log("error "+e.toString());
+        log("error ${e.toString()}");
       }
     });
   }

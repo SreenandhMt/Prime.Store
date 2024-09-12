@@ -14,4 +14,6 @@ final class SelledProdects extends ShopInfoState {
   SelledProdects({required this.data, required this.shopData, required this.shopAddress, required this.ordersData});
 }
 
+final class NoData extends ShopInfoState {}
+
 final class Uploading extends ShopInfoState {}

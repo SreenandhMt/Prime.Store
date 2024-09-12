@@ -5,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:main_work/features/account/data/module/account_orders_module.dart';
-import 'package:main_work/features/account/domain/entities/account_favorit_entities.dart';
 import 'package:main_work/features/account/domain/entities/account_orders_entities.dart';
 import 'package:main_work/main.dart';
 
@@ -57,7 +55,6 @@ Widget ratingWidget(BuildContext context,AccountOrdersDataEntities product){
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(onTap: ()async{
                 if(snapshot.data==true)return;
-                final data = await _firestore.collection("products").doc(product.productId!).get().then((value) => value.data());
                 // final map = {
                 //         "productId": product.productId,
                 //         "productUrls": product.map!.productUrls,

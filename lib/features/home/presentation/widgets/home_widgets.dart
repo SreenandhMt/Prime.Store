@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:redacted/redacted.dart';
 
 import '../../domain/entities/home_category_entities.dart';
@@ -21,12 +22,7 @@ class ProductWidget extends StatelessWidget {
     // if (size.width <= 500) {
       return GestureDetector(
         onTap: () {
-          if(dataList!=null)
-          {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyingPage(homeData: data,dataList: dataList,),));
-          }else{
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyingPage(homeData: data),));
-          }
+              context.go('/Buy/${data.productId}');
         },
         child: Container(
           margin: const EdgeInsets.all(3.5),
@@ -74,7 +70,7 @@ class ProductText extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(data.productName??"",style: TextStyle(), maxLines: 1,overflow: TextOverflow.clip),
+          Text(data.productName??"",style: const TextStyle(), maxLines: 1,overflow: TextOverflow.clip),
           Text(
             data.productAbout??"",
             style: TextStyle(color: theme.tertiary),
@@ -114,7 +110,7 @@ class ProductText extends StatelessWidget {
         rateindex=i;
       }
     }
-    return top!=null?"$rateindex | ${!top.toString().endsWith(".0")?top.toString()+".0":top.toString()}":"";
+    return top!=null?"$rateindex | ${!top.toString().endsWith(".0")?"$top.0":top.toString()}":"";
   }
 }
 
@@ -133,9 +129,9 @@ class ProductLoadingWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                          color: Theme.of(context).colorScheme.primary,
-                         child: ProductTextForLoading()),
+                         child: const ProductTextForLoading()),
                 ],
               ),
             ).redacted(context: context, redact: true,configuration: RedactedConfiguration());
@@ -156,13 +152,13 @@ class ProductTextForLoading extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(width: 90,height: 20,decoration: BoxDecoration(color: theme.primary,borderRadius: BorderRadius.circular(10)),margin: EdgeInsets.all(3),),
-          Container(height: 30,decoration:  BoxDecoration(color: theme.primary,borderRadius: BorderRadius.circular(10)),margin: EdgeInsets.all(3),),
+          Container(width: 90,height: 20,decoration: BoxDecoration(color: theme.primary,borderRadius: BorderRadius.circular(10)),margin: const EdgeInsets.all(3),),
+          Container(height: 30,decoration:  BoxDecoration(color: theme.primary,borderRadius: BorderRadius.circular(10)),margin: const EdgeInsets.all(3),),
           Row(
             children: [
-              Container(width: 70,height: 20,decoration: BoxDecoration(color: theme.primary,borderRadius: BorderRadius.circular(10)),margin: EdgeInsets.all(3),),
-              Spacer(),
-              Container(width: 60,height: 20,decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(10)),margin: EdgeInsets.all(3),),
+              Container(width: 70,height: 20,decoration: BoxDecoration(color: theme.primary,borderRadius: BorderRadius.circular(10)),margin: const EdgeInsets.all(3),),
+              const Spacer(),
+              Container(width: 60,height: 20,decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(10)),margin: const EdgeInsets.all(3),),
             ],
           )
         ],

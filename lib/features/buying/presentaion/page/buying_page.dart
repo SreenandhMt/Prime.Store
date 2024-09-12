@@ -2,6 +2,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:main_work/features/account/presentaion/bloc/bloc/account_bloc.dart';
 import 'package:main_work/features/auth/presentaion/page/auth_page.dart';
 import 'package:main_work/features/buying/presentaion/widget/desktop_view.dart';
@@ -11,7 +13,6 @@ import '../../../home/domain/entities/home_category_entities.dart';
 import '../blocs/buying_bloc/buying_bloc.dart';
 import '/features/home/domain/entities/home_entitie.dart';
 import '/main.dart';
-
 
 const divider = Padding(
   padding: EdgeInsets.all(8.0),
@@ -24,23 +25,21 @@ const divider = Padding(
 class BuyingPage extends StatelessWidget {
   const BuyingPage({
     Key? key,
-    required this.homeData,
-    this.dataList,
+    this.id
   }) : super(key: key);
-  final HomeDataEntities homeData;
-  final HomeCategoryDataEntities? dataList;
+  final String? id;
 
   @override
   Widget build(BuildContext context) {
     context
         .read<BuyingBloc>()
-        .add(GetProductInfo(productId: homeData.productId!));
+        .add(GetProductInfo(noData: id!=null,productId: id!));
     final size = MediaQuery.of(context).size;
     if(size.width>=1000)
     {
-      return DesktopViewBuyingScreen(homeData: homeData,dataList: dataList);
+      return DesktopViewBuyingScreen(id: id);
     }else{
-      return MobileViewBuyingScreen(homeData: homeData,dataList: dataList);
+      return MobileViewBuyingScreen(id: id!);
     }
     
   }
@@ -52,8 +51,10 @@ class BuyingPageAppBar extends StatelessWidget {
   const BuyingPageAppBar({
     Key? key,
     required this.homeData,
+    required this.favoritStatus,
   }) : super(key: key);
   final HomeDataEntities homeData;
+  final bool favoritStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,7 @@ class BuyingPageAppBar extends StatelessWidget {
         return Row(
           children: [
             IconButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: ()=>context.go("/"),
                 icon: const Icon(
                   Icons.navigate_before,
                   size: 35,
@@ -84,10 +85,10 @@ class BuyingPageAppBar extends StatelessWidget {
                   onPressed: () {
                     if(FirebaseAuth.instance.currentUser==null)
                     {
-                      showDialog(context: context, builder: (context) => Dialog(child: SizedBox(width: size.width>=1000?size.width*0.3:size.width*0.6,child: AuthGate(),),),);
+                      showDialog(context: context, builder: (context) => Dialog(child: SizedBox(width: size.width>=1000?size.width*0.3:size.width*0.6,child: const AuthGate(),),),);
                       return;
                     }
-                    state.favoritListAdded
+                    favoritStatus
                         ? context
                             .read<AccountBloc>()
                             .add(DeleteData(productId: homeData.productId!))
@@ -99,14 +100,14 @@ class BuyingPageAppBar extends StatelessWidget {
                         .add(GetProductInfo(productId: homeData.productId!));
                   },
                   icon: Icon(
-                      state.favoritListAdded
+                      favoritStatus
                           ? Icons.favorite_rounded
                           : Icons.favorite_outline_rounded,
                       size: 30,
                       color:
-                          state.favoritListAdded ? Colors.red : theme.error))else IconButton(
+                          favoritStatus ? Colors.red : theme.error))else IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.favorite_outline_rounded,
+                  icon: const Icon(Icons.favorite_outline_rounded,
                       size: 30)),
             const SizedBox(
               width: 10,

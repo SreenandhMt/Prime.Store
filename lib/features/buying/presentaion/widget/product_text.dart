@@ -52,7 +52,7 @@ class BuyingTexts extends StatelessWidget {
                   fontSize: 18, fontWeight: FontWeight.bold
                     ),
               ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             homeData.productAbout!,
             style: const TextStyle(color: Colors.grey, fontSize: 14, fontWeight: FontWeight.w400),

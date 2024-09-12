@@ -52,7 +52,7 @@ class CategoryWidget extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               Container(margin: const EdgeInsets.only(top: 1.5,left: 1.5),decoration: BoxDecoration(color: theme.brightness == Brightness.dark?const Color.fromARGB(255, 74, 112, 75):Colors.yellow,borderRadius: BorderRadius.circular(7)),height: _size!.width<=1000? _size!.width*0.147: 100,width: _size!.width<=1000? _size!.width*0.147: 100,child: Icon(icon,color: Colors.grey.shade700,size: 35,)),
-              Container(margin: const EdgeInsets.only(top: 0.8,left: 0.9),decoration: BoxDecoration(color: theme.brightness == Brightness.dark? Color.fromARGB(255, 171, 220, 65): const Color.fromARGB(255, 74, 112, 75),borderRadius: BorderRadius.circular(7)),height:  _size!.width<=1000? _size!.width*0.147: 100,width:  _size!.width<=1000? _size!.width*0.147: 100,child: Icon(icon,color: Colors.grey.shade700,size: 35,)),
+              Container(margin: const EdgeInsets.only(top: 0.8,left: 0.9),decoration: BoxDecoration(color: theme.brightness == Brightness.dark? const Color.fromARGB(255, 171, 220, 65): const Color.fromARGB(255, 74, 112, 75),borderRadius: BorderRadius.circular(7)),height:  _size!.width<=1000? _size!.width*0.147: 100,width:  _size!.width<=1000? _size!.width*0.147: 100,child: Icon(icon,color: Colors.grey.shade700,size: 35,)),
               Container(decoration: BoxDecoration(color: Colors.grey.shade300,borderRadius: BorderRadius.circular(7)),height: _size!.width<=1000? _size!.width*0.14: 97,width:_size!.width<=1000? _size!.width*0.14: 97,child: Icon(icon,color: Colors.grey.shade700,size: 35,)),
             ],
           ),

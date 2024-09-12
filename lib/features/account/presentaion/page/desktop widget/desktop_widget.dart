@@ -1,35 +1,31 @@
-import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:main_work/features/account/presentaion/bloc/bloc/account_bloc.dart';
 import 'package:main_work/features/cart/presentaion/pages/cart_page.dart';
 import 'package:main_work/features/notification/presentaion/page/notification_page.dart';
 import 'package:main_work/features/selling/selling_page.dart';
 
-import '../../../../../bottom_navigation/bottom_navigation.dart';
 import '../../../../../core/theme/themes.dart';
 import '../../../../../main.dart';
-import '../../../../auth/presentaion/page/auth_page.dart';
 import '../../../../home/data/module/home_module.dart';
 import '../../../../home/presentation/pages/home_page.dart';
 import '../../../../home/presentation/widgets/home_widgets.dart';
-import '../../../../search/pages/search_page.dart';
+import '../../../../home/presentation/widgets/info_widget.dart';
+import '../../../../home/presentation/widgets/search_page.dart';
 import '../../../../shop/presentaion/bloc/bloc/shop_info_bloc.dart';
 import '../../../../shop/presentaion/page/shop_profile.dart';
 import '../../widgets/address_card.dart';
 import '../../widgets/order_summary.dart';
 import '../../widgets/profile_widget.dart';
- int currentIndex = 0;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
     Key? key,
-    this.pageNumber,
+    required this.pageNumber,
   }) : super(key: key);
   final int? pageNumber;
 
@@ -38,42 +34,27 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  bool opened=false;
   @override
   void initState() {
-    currentIndex = widget.pageNumber??currentIndex;
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-     return StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          WidgetsBinding.instance.addPostFrameCallback(
-            (timeStamp) {
-              showDialog(
-                context: context,
-                builder: (context) => Dialog(
-                  // shape: Border.all(),
-                  child: SizedBox(
-                      width: size.width <= 1000
-                          ? size.width * 0.6
-                          : size.width * 0.3,
-                      child: AuthGate()),
-                ),
-              );
-            },
-          );
-          return Scaffold(appBar:AppBar(title: Text("Go back"),), body:  SizedBox());
-        }
-        context.read<ShopInfoBloc>().add(GetSelledDatas());
+    context.read<ShopInfoBloc>().add(GetSelledDatas());
     context.read<AccountBloc>().add(GetOrderList());
+    if(widget.pageNumber==null)
+    {
+      return Center(child: TextButton(onPressed: () {
+        context.go("/Settings/0");
+      },child: const Text("Page Not Found Go Back"),),);
+    }
         return Scaffold(
           body: ListView(
             children: [
               const SizedBox(height: 10),
-              AppBarCusttom(size,context),
+              appBarCusttom(size,context),
               const SizedBox(height: 20),
               const Divider(height: 1,color: Colors.black26,),
               Center(
@@ -89,14 +70,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _buildMenuItem('Profile', currentIndex==0,0),
-                            _buildMenuItem('Shop Info', currentIndex==1,1),
-                            _buildMenuItem('My Orders', currentIndex==2,2),
-                            _buildMenuItem('My Wishlist', currentIndex==3,3),
-                            _buildMenuItem('Addresses', currentIndex==4,4),
-                            _buildMenuItem('Sell Product', currentIndex==5,5),
-                            _buildMenuItem('Cart/Bag', currentIndex==6,6),
-                            _buildMenuItem('Notification', currentIndex==7,7),
+                            _buildMenuItem('Profile', widget.pageNumber==0,0),
+                            _buildMenuItem('Shop Info', widget.pageNumber==1,1),
+                            _buildMenuItem('My Orders', widget.pageNumber==2,2),
+                            _buildMenuItem('My Wishlist', widget.pageNumber==3,3),
+                            _buildMenuItem('Addresses', widget.pageNumber==4,4),
+                            _buildMenuItem('Sell Product', widget.pageNumber==5,5),
+                            _buildMenuItem('Cart/Bag', widget.pageNumber==6,6),
+                            _buildMenuItem('Notification', widget.pageNumber==7,7),
                           ],
                         ),
                       ),
@@ -111,7 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               return const Center(child: CircularProgressIndicator(),);
                             }
                             if (state is GetAccountDatas) {
-                              if(currentIndex == 3)
+                              if(widget.pageNumber == 3)
                               {
                                 return Wrap(
                                   children: List.generate(
@@ -121,27 +102,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 state.favoriteData[index].map!),
                                           )),
                                 );
-                              }else if(currentIndex == 5){
-                                return SellingPage();
-                              }else if(currentIndex == 2){
+                              }else if(widget.pageNumber == 5){
+                                return const SellingPage();
+                              }else if(widget.pageNumber == 2){
                                 return Column(
                                     children: List.generate(
                                         state.ordersData.length,
                                         (index) => OrderSummary(
                                             data: state.ordersData[index])),
                                   );
-                              }else if(currentIndex==4){
+                              }else if(widget.pageNumber==4){
                                 return const AddressCard();
-                              }else if(currentIndex==6)
+                              }else if(widget.pageNumber==6)
                               {
-                                return ScreenCartPage();
-                              }else if(currentIndex==7)
+                                return const ScreenCartPage();
+                              }else if(widget.pageNumber==7)
                               {
-                                return ScreenNotification();
-                              }else if(currentIndex==1)
+                                return const ScreenNotification();
+                              }else if(widget.pageNumber==1)
                               {
                                 return 
-                                      ShopProfile();
+                                      const ShopProfile();
                               }else{
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -162,15 +143,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 50,),
               const Divider(height: 1,color: Colors.black26,),
               const SizedBox(height: 10,),
-              FooterScreen(),
+              const FooterScreen(),
             ],
           ),
         );
-      }
-    );
   }
 
-  Widget AppBarCusttom(Size size,BuildContext context){
+  Widget appBarCusttom(Size size,BuildContext context){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -212,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: const EdgeInsets.all(0),
                     onPressed: (){
                       setState(() {
-                        currentIndex = 3;
+                        context.go("/Settings/3");
                       });
                     },
                     icon: const Icon(
@@ -226,7 +205,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: const EdgeInsets.all(0),
                     onPressed: (){
                       setState(() {
-                        currentIndex = 6;
+                        context.go("/Settings/6");
                       });
                     },
                     icon: const Icon(
@@ -244,9 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: InkWell(
-        onTap: () => setState(() {
-          currentIndex = index;
-        }),
+        onTap: () => context.go("/Settings/$index"),
         child: Row(
           children: [
             if (isSelected)

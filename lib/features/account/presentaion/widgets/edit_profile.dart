@@ -1,11 +1,10 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:main_work/features/account/presentaion/bloc/bloc/account_bloc.dart';
 
 class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({super.key});
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
@@ -28,9 +27,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: ListView(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('General Information'),
-            SizedBox(height: 20,),
-            Text("FULL NAME",style: TextStyle(color: Colors.grey)),
+            const Text('General Information'),
+            const SizedBox(height: 20,),
+            const Text("FULL NAME",style: TextStyle(color: Colors.grey)),
             TextField(
               controller: fullname,
               decoration: InputDecoration(
@@ -38,8 +37,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 hintText: 'name',
               ),
             ),
-            SizedBox(height: 15),
-            Text("LAST NAME",style: TextStyle(color: Colors.grey)),
+            const SizedBox(height: 15),
+            const Text("LAST NAME",style: TextStyle(color: Colors.grey)),
             TextField(
               controller: lastname,
               decoration: InputDecoration(
@@ -47,8 +46,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 hintText: 'last name',
               ),
             ),
-            SizedBox(height: 15),
-            Text("EMAIL ADDRESS",style: TextStyle(color: Colors.grey)),
+            const SizedBox(height: 15),
+            const Text("EMAIL ADDRESS",style: TextStyle(color: Colors.grey)),
             TextField(
               controller: email,
               decoration: InputDecoration(
@@ -57,8 +56,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 // enabled: false, // Disables the email field (assuming it's non-editable)
               ),
             ),
-            SizedBox(height: 15),
-            Text("PHONE NUMBER",style: TextStyle(color: Colors.grey)),
+            const SizedBox(height: 15),
+            const Text("PHONE NUMBER",style: TextStyle(color: Colors.grey)),
             TextField(
               controller: phoneNumber,
               decoration: InputDecoration(
@@ -68,8 +67,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 prefixText: '+91 ',
               ),
             ),
-            SizedBox(height: 15),
-            Text("DATE OF BIRTH (DD-MM-YYYY)",style: TextStyle(color: Colors.grey)),
+            const SizedBox(height: 15),
+            const Text("DATE OF BIRTH (DD-MM-YYYY)",style: TextStyle(color: Colors.grey)),
             TextField(
               controller: birthday,
               decoration: InputDecoration(
@@ -77,8 +76,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 hintText: 'dd-mm-yyyy',
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'GENDER',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -86,10 +85,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
               children: [
                 Expanded(
                   child: RadioListTile(
-                    title: Text('Male'),
+                    title: const Text('Male'),
                     value: 'male',
                     groupValue: selectedGenter, 
-                    contentPadding: EdgeInsets.all(0),
+                    contentPadding: const EdgeInsets.all(0),
                     selected: selectedGenter == 'male',
                     onChanged: (value) {
                       setState(() {
@@ -105,9 +104,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
                 Expanded(
                   child: RadioListTile(
-                    title: Text('Female'),
+                    title: const Text('Female'),
                     value: 'female',
-                    contentPadding: EdgeInsets.all(0),
+                    contentPadding: const EdgeInsets.all(0),
                     groupValue: selectedGenter,
                     onChanged: (value) {
                       setState(() {
@@ -123,10 +122,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
                 Expanded(
                   child: RadioListTile(
-                    title: Text('Not Specified'),
+                    title: const Text('Not Specified'),
                     value: 'not_specified',
                     groupValue: selectedGenter,
-                    contentPadding: EdgeInsets.all(0),
+                    contentPadding: const EdgeInsets.all(0),
                     onChanged: (value) {
                       setState(() {
                         if(selectedGenter == value)
@@ -141,7 +140,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -149,18 +148,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  padding: EdgeInsets.only(left: 50,top: 20,right: 50,bottom: 20),
-                  child: Text('CANCEL',style: TextStyle(color: Colors.red),),
+                  padding: const EdgeInsets.only(left: 50,top: 20,right: 50,bottom: 20),
                   color: Colors.white,
+                  child: const Text('CANCEL',style: TextStyle(color: Colors.red),),
                   ),
-                  SizedBox(width: 8,),
+                  const SizedBox(width: 8,),
                 MaterialButton(
                   onPressed: () {
                     context.read<AccountBloc>().add(EditProfile(name: '${fullname.text} ${lastname.text}', phoneNumber: phoneNumber.text, email: email.text, birthday: birthday.text, gender: selectedGenter));
                   },
-                  padding: EdgeInsets.only(left: 50,top: 20,right: 50,bottom: 20),
-                  child: Text('SAVE'),
+                  padding: const EdgeInsets.only(left: 50,top: 20,right: 50,bottom: 20),
                   color: Colors.red,
+                  child: const Text('SAVE'),
                 ),
               ],
             ),

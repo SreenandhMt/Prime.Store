@@ -1,4 +1,4 @@
-import 'dart:developer';
+// import 'dart:developer';
 
 import '../../domain/entities/home_entitie.dart';
 
@@ -31,7 +31,7 @@ class HomeData extends HomeDataEntities {
             productType: productType);
 
   factory HomeData.formjson(Map map) {
-    log(map.toString());
+    // log(map.toString());
     return HomeData(
         productUrls: map["productUrls"],
         productName: map["productName"],

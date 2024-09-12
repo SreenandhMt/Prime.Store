@@ -39,7 +39,7 @@ class AccountFavoritData extends AccountFavoritDataEntities {
         colors: 1,
         size: map["size"],
         map: map,
-        colorList:  [],
+        colorList:  const [],
         sizeList: map["sizeList"] ?? [],
         productType: map["productType"] ?? "");
   }
